@@ -9,10 +9,6 @@ use Symfony\Component\Validator\ConstraintViolationListInterface;
 class Violation
 {
 
-    /**
-     * @param ConstraintViolationListInterface $violations
-     * @return array
-     */
     public function build(ConstraintViolationListInterface $violations): array
     {
         $errors = [];
@@ -25,10 +21,6 @@ class Violation
         return $this->buildMessages($errors);
     }
 
-    /**
-     * @param array $errors
-     * @return array
-     */
     private function buildMessages(array $errors): array
     {
         $result = [];
@@ -52,10 +44,6 @@ class Violation
         return $result;
     }
 
-    /**
-     * @param string $text
-     * @return string
-     */
     private function makeSnakeCase(string $text): string
     {
         if (!trim($text)) {

@@ -1,6 +1,5 @@
-api_auth_login:
-    path: /api/auth/login
-    methods:  [POST]
+api_login_check:
+    path: /api/login_check
 
 api:
     prefix: /api

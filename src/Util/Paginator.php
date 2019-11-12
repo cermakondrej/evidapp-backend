@@ -10,51 +10,30 @@ use Traversable;
 
 class Paginator
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private const PAGE_SIZE = 10;
 
-    /**
-     * @var DoctrineQueryBuilder
-     */
+    /** @var DoctrineQueryBuilder */
     private $queryBuilder;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $currentPage;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $pageSize;
 
-    /**
-     * @var Traversable
-     */
+    /** @var Traversable */
     private $results;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $numResults;
 
-    /**
-     * Paginator constructor.
-     * @param DoctrineQueryBuilder $queryBuilder
-     * @param int $pageSize
-     */
     public function __construct(DoctrineQueryBuilder $queryBuilder, int $pageSize = self::PAGE_SIZE)
     {
         $this->queryBuilder = $queryBuilder;
         $this->pageSize = $pageSize;
     }
 
-    /**
-     * @param int $page
-     * @return $this
-     */
     public function paginate(int $page = 1): self
     {
         $this->currentPage = max(1, $page);
@@ -80,81 +59,51 @@ class Paginator
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getCurrentPage(): int
     {
         return $this->currentPage;
     }
 
-    /**
-     * @return int
-     */
     public function getLastPage(): int
     {
-        return (int) ceil($this->numResults / $this->pageSize);
+        return (int)ceil($this->numResults / $this->pageSize);
     }
 
-    /**
-     * @return int
-     */
     public function getPageSize(): int
     {
         return $this->pageSize;
     }
 
-    /**
-     * @return bool
-     */
     public function hasPreviousPage(): bool
     {
         return $this->currentPage > 1;
     }
 
-    /**
-     * @return int
-     */
     public function getPreviousPage(): int
     {
         return max(1, $this->currentPage - 1);
     }
 
-    /**
-     * @return bool
-     */
     public function hasNextPage(): bool
     {
         return $this->currentPage < $this->getLastPage();
     }
 
-    /**
-     * @return int
-     */
     public function getNextPage(): int
     {
         return min($this->getLastPage(), $this->currentPage + 1);
     }
 
-    /**
-     * @return bool
-     */
     public function hasToPaginate(): bool
     {
         return $this->numResults > $this->pageSize;
     }
 
-    /**
-     * @return int
-     */
     public function getNumResults(): int
     {
         return $this->numResults;
     }
 
-    /**
-     * @return Traversable
-     */
     public function getResults(): Traversable
     {
         return $this->results;

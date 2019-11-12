@@ -3,24 +3,23 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Company;
-use App\Repository\CompanyRepository;
+use App\Entity\Work;
+use App\Repository\WorkRepository;
 use App\Validation\RequestValidator;
-use App\Validation\RequestValidatorInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("companies")
+ * @Route("works")
  */
-class CompanyController extends BaseController
+class WorkController extends BaseController
 {
     /**
-     * @Route("/", name="company_list", methods={"GET"})
+     * @Route("/", name="work_list", methods={"GET"})
      */
-    public function listAction(CompanyRepository $repository, Request $request): JsonResponse
+    public function listAction(WorkRepository $repository, Request $request): JsonResponse
     {
         // TODO EXTRACT THIS INTO SOME KIND OF MIDDLEWARE
         $limit = (int) $request->query->get('limit') ?? 25;
@@ -31,23 +30,22 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="company_detail", methods={"GET"}, requirements={"id":"\d+"})
+     * @Route("/{id}", name="work_detail", methods={"GET"}, requirements={"id":"\d+"})
      */
-    public function detailAction(Company $company): JsonResponse
+    public function detailAction(Work $work): JsonResponse
     {
-        return $this->respondWithResource($company);
+        return $this->respondWithResource($work);
 
     }
 
     /**
-     * @Route("/", name="company_new", methods={"POST"})
+     * @Route("/", name="work_new", methods={"POST"})
      */
     public function newAction(Request $request, RequestValidator $validator): JsonResponse
     {
 
         try{
-            $object = $validator->validate($request->getContent(), Company::class);
-
+            $object = $validator->validate($request->getContent(), Work::class);
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
@@ -62,12 +60,12 @@ class CompanyController extends BaseController
 
 
     /**
-     * @Route("/{id}", name="company_edit", methods={"PATCH", "PUT"}, requirements={"id":"\d+"})
+     * @Route("/{id}", name="work_edit", methods={"PATCH", "PUT"}, requirements={"id":"\d+"})
      */
-    public function editAction(Request $request, RequestValidator $validator, Company $company): JsonResponse
+    public function editAction(Request $request, RequestValidator $validator, Work $work): JsonResponse
     {
         try {
-            $object = $validator->validate($request->getContent(), Company::class, $company);
+            $object = $validator->validate($request->getContent(), Work::class, $work);
 
 
             $em = $this->getDoctrine()->getManager();
@@ -83,12 +81,12 @@ class CompanyController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="company_delete", methods={"DELETE"}, requirements={"id":"\d+"})
+     * @Route("/{id}", name="work_delete", methods={"DELETE"}, requirements={"id":"\d+"})
      */
-    public function deleteAction(Company $company): JsonResponse
+    public function deleteAction(Work $work): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
-        $em->remove($company);
+        $em->remove($work);
         $em->flush();
 
         return $this->respondDeleted();

@@ -12,17 +12,16 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/user")
  */
-class UserController extends AbstractController
+class UserController extends BaseController
 {
     /**
      * @Route("/{id}", name="api_user_detail", methods={"GET"})
-     * @param User $user
-     * @return JsonResponse
      */
-    public function detail(User $user)
+    public function detail(User $user): JsonResponse
     {
-        $this->denyAccessUnlessGranted('view', $user);
-        return new JsonResponse($user, 200);
+//        $this->denyAccessUnlessGranted('view', $user);
+
+        return $this->respondWithResource($user);
     }
 
 

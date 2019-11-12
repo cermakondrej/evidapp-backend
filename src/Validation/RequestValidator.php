@@ -9,7 +9,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class RequestValidator implements RequestValidatorInterface
+class RequestValidator
 {
     /**
      * @var SerializerInterface
@@ -24,12 +24,6 @@ class RequestValidator implements RequestValidatorInterface
      */
     private $violator;
 
-    /**
-     * RequestValidator constructor.
-     * @param SerializerInterface $serializer
-     * @param ValidatorInterface $validator
-     * @param Violation $violator
-     */
     public function __construct(
         SerializerInterface $serializer,
         ValidatorInterface $validator,
@@ -40,21 +34,14 @@ class RequestValidator implements RequestValidatorInterface
         $this->violator = $violator;
     }
 
-
-    /**
-     * @param string $data
-     * @param string $model
-     * @return object
-     * @throws BadRequestHttpException
-     */
-    public function validate(string $data, string $model): object
+    public function validate(string $data, string $model, object $objectToPopulate = null): object
     {
         if (!$data) {
             throw new BadRequestHttpException('Empty body.');
         }
 
         try {
-            $object = $this->serializer->deserialize($data, $model, 'json');
+            $object = $this->serializer->deserialize($data, $model, 'json', ['object_to_populate' => $objectToPopulate]);
         } catch (Exception $e) {
             throw new BadRequestHttpException('Invalid body.');
         }

@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "lexik/jwt-authentication-bundle": "^2.6",
@@ -14,6 +14,7 @@
         "symfony/dotenv": "4.2.*",
         "symfony/expression-language": "4.2.*",
         "symfony/flex": "^1.1",
+        "symfony/form": "4.2.*",
         "symfony/framework-bundle": "^4.2",
         "symfony/monolog-bundle": "^3.1",
         "symfony/orm-pack": "*",
@@ -25,14 +26,15 @@
         "symfony/translation": "4.2.*",
         "symfony/validator": "4.2.*",
         "symfony/web-link": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.2.*",
+        "ext-json": "*"
     },
     "require-dev": {
-        "symfony/twig-bundle": "4.2.*",
         "symfony/debug-pack": "*",
-        "symfony/maker-bundle": "^1.0",
+        "symfony/maker-bundle": "^1.14",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
+        "symfony/twig-bundle": "4.2.*",
         "symfony/web-server-bundle": "4.2.*"
     },
     "config": {

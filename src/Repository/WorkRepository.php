@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Work;
+use App\Util\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -20,4 +21,10 @@ class WorkRepository extends ServiceEntityRepository
         parent::__construct($registry, Work::class);
     }
 
+    public function findAllPaginated(int $limit, int $page): Paginator
+    {
+        $qb = $this->createQueryBuilder('j');
+
+        return (new Paginator($qb, $limit))->paginate($page);
+    }
 }

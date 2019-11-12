@@ -56,5 +56,7 @@ services:
     adminer:
       image: adminer
       container_name: ${PROJECT_NAME}-adminer
+      volumes:
+        - ./docker/adminer/php-ini-overrides.ini:/usr/local/etc/php/conf.d/99-overrides.inidocker
       ports:
         - "8080:8080"

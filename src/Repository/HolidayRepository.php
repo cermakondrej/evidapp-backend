@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Holiday;
+use App\Util\Paginator;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
@@ -20,4 +21,10 @@ class HolidayRepository extends ServiceEntityRepository
         parent::__construct($registry, Holiday::class);
     }
 
+    public function findAllPaginated(int $limit, int $page): Paginator
+    {
+        $qb = $this->createQueryBuilder('h');
+
+        return (new Paginator($qb, $limit))->paginate($page);
+    }
 }

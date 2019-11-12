@@ -6,57 +6,72 @@ namespace App\Entity;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use JsonSerializable;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
  */
-class Work
+class Work implements JsonSerializable
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int
      */
     private $id;
 
     /**
      * @Assert\NotBlank
      * @ORM\Column(type="float")
+     * @var float
      */
     private $workload;
 
     /**
      * @Assert\NotBlank
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="time")
+     * @var DateTimeInterface
      */
     private $start;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\NotBlank
+     * @ORM\Column(type="time", nullable=true)
+     * @var DateTimeInterface
      */
-    private $break;
+    private $breakStart;
 
     /**
+     * @ORM\Column(type="time", nullable=true)
+     * @var DateTimeInterface
+     */
+    private $breakEnd;
+
+    /**
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="works")
      * @ORM\JoinColumn(nullable=false)
+     * @var Job
      */
     private $job;
 
     /**
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="works")
      * @ORM\JoinColumn(nullable=false)
+     * @var Company
      */
     private $company;
 
     /**
+     * @Assert\NotBlank
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="works")
      * @ORM\JoinColumn(nullable=false)
+     * @var User
      */
     private $employee;
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->employee->getFullName() . " - "
@@ -65,26 +80,16 @@ class Work
             . " (" . $this->getWorkload() . ")";
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return float|null
-     */
     public function getWorkload(): ?float
     {
         return $this->workload;
     }
 
-    /**
-     * @param float $workload
-     * @return $this
-     */
     public function setWorkload(float $workload): self
     {
         $this->workload = $workload;
@@ -92,18 +97,11 @@ class Work
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getStart(): ?DateTimeInterface
     {
         return $this->start;
     }
 
-    /**
-     * @param DateTimeInterface $start
-     * @return $this
-     */
     public function setStart(DateTimeInterface $start): self
     {
         $this->start = $start;
@@ -111,37 +109,35 @@ class Work
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
-    public function getBreak(): ?DateTimeInterface
+    public function getBreakStart(): DateTimeInterface
     {
-        return $this->break;
+        return $this->breakStart;
     }
 
-    /**
-     * @param DateTimeInterface|null $break
-     * @return $this
-     */
-    public function setBreak(?DateTimeInterface $break): self
+    public function setBreakStart(DateTimeInterface $breakStart): self
     {
-        $this->break = $break;
+        $this->breakStart = $breakStart;
 
         return $this;
     }
 
-    /**
-     * @return Job|null
-     */
+    public function getBreakEnd(): DateTimeInterface
+    {
+        return $this->breakEnd;
+    }
+
+    public function setBreakEnd(DateTimeInterface $breakEnd): self
+    {
+        $this->breakEnd = $breakEnd;
+
+        return $this;
+    }
+
     public function getJob(): ?Job
     {
         return $this->job;
     }
 
-    /**
-     * @param Job|null $job
-     * @return $this
-     */
     public function setJob(?Job $job): self
     {
         $this->job = $job;
@@ -149,18 +145,11 @@ class Work
         return $this;
     }
 
-    /**
-     * @return Company|null
-     */
     public function getCompany(): ?Company
     {
         return $this->company;
     }
 
-    /**
-     * @param Company|null $company
-     * @return $this
-     */
     public function setCompany(?Company $company): self
     {
         $this->company = $company;
@@ -168,22 +157,32 @@ class Work
         return $this;
     }
 
-    /**
-     * @return User|null
-     */
     public function getEmployee(): ?User
     {
         return $this->employee;
     }
 
-    /**
-     * @param User|null $employee
-     * @return $this
-     */
     public function setEmployee(?User $employee): self
     {
         $this->employee = $employee;
 
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'workload' => $this->workload,
+            'start' => $this->start->format('H:i'),
+            'break_start' => $this->breakStart->format('H:i'),
+            'break_end' => $this->breakEnd->format('H:i'),
+            'job' => $this->job->getName(),
+            'company' => $this->company->getName(),
+            'employee' => $this->employee
+        ];
     }
 }

@@ -32,3 +32,9 @@ services:
             $nameConverter: '@serializer.name_converter.camel_case_to_snake_case'
             $propertyTypeExtractor: '@property_info.php_doc_extractor'
         tags: [serializer.normalizer]
+
+#    App\Normalizer\EntityNormalizer:
+#        public: false
+#        autowire: true
+#        autoconfigure: true
+#        tags: [serializer.normalizer]
