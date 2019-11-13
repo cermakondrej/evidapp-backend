@@ -44,11 +44,9 @@ class Holiday implements JsonSerializable
         return $this->day;
     }
 
-    public function setDay(int $day): self
+    public function setDay(int $day): void
     {
         $this->day = $day;
-
-        return $this;
     }
 
     public function getMonth(): ?int
@@ -56,11 +54,9 @@ class Holiday implements JsonSerializable
         return $this->month;
     }
 
-    public function setMonth(int $month): self
+    public function setMonth(int $month): void
     {
         $this->month = $month;
-
-        return $this;
     }
 
     /**

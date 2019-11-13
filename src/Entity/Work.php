@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use JsonSerializable;
@@ -36,15 +38,14 @@ class Work implements JsonSerializable
     private $start;
 
     /**
-     * @Assert\NotBlank
      * @ORM\Column(type="time", nullable=true)
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $breakStart;
 
     /**
      * @ORM\Column(type="time", nullable=true)
-     * @var DateTimeInterface
+     * @var DateTimeInterface|null
      */
     private $breakEnd;
 
@@ -72,6 +73,17 @@ class Work implements JsonSerializable
      */
     private $employee;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Export", mappedBy="work")
+     * @var WorkExport[]
+     */
+    private $exports;
+
+    public function __construct()
+    {
+        $this->exports = new ArrayCollection();
+    }
+
     public function __toString(): string
     {
         return $this->employee->getFullName() . " - "
@@ -90,11 +102,9 @@ class Work implements JsonSerializable
         return $this->workload;
     }
 
-    public function setWorkload(float $workload): self
+    public function setWorkload(float $workload): void
     {
         $this->workload = $workload;
-
-        return $this;
     }
 
     public function getStart(): ?DateTimeInterface
@@ -102,35 +112,31 @@ class Work implements JsonSerializable
         return $this->start;
     }
 
-    public function setStart(DateTimeInterface $start): self
+    public function setStart(DateTimeInterface $start): void
     {
         $this->start = $start;
-
-        return $this;
     }
 
-    public function getBreakStart(): DateTimeInterface
+    public function getBreakStart(): ?DateTimeInterface
     {
         return $this->breakStart;
     }
 
-    public function setBreakStart(DateTimeInterface $breakStart): self
+    public function setBreakStart(DateTimeInterface $breakStart): void
     {
         $this->breakStart = $breakStart;
 
-        return $this;
     }
 
-    public function getBreakEnd(): DateTimeInterface
+    public function getBreakEnd(): ?DateTimeInterface
     {
         return $this->breakEnd;
     }
 
-    public function setBreakEnd(DateTimeInterface $breakEnd): self
+    public function setBreakEnd(DateTimeInterface $breakEnd): void
     {
         $this->breakEnd = $breakEnd;
 
-        return $this;
     }
 
     public function getJob(): ?Job
@@ -138,11 +144,9 @@ class Work implements JsonSerializable
         return $this->job;
     }
 
-    public function setJob(?Job $job): self
+    public function setJob(?Job $job): void
     {
         $this->job = $job;
-
-        return $this;
     }
 
     public function getCompany(): ?Company
@@ -150,11 +154,10 @@ class Work implements JsonSerializable
         return $this->company;
     }
 
-    public function setCompany(?Company $company): self
+    public function setCompany(?Company $company): void
     {
         $this->company = $company;
 
-        return $this;
     }
 
     public function getEmployee(): ?User
@@ -162,11 +165,37 @@ class Work implements JsonSerializable
         return $this->employee;
     }
 
-    public function setEmployee(?User $employee): self
+    public function setEmployee(?User $employee): void
     {
         $this->employee = $employee;
 
-        return $this;
+    }
+
+    /**
+     * @return Collection|WorkExport[]
+     */
+    public function getExports(): Collection
+    {
+        return $this->exports;
+    }
+
+    public function addExport(WorkExport $export): void
+    {
+        if (!$this->exports->contains($export)) {
+            $this->exports[] = $export;
+            $export->setWork($this);
+        }
+    }
+
+    public function removeExport(WorkExport $export): void
+    {
+        if ($this->exports->contains($export)) {
+            $this->exports->removeElement($export);
+            // set the owning side to null (unless already changed)
+            if ($export->getWork() === $this) {
+                $export->setWork(null);
+            }
+        }
     }
 
     /**

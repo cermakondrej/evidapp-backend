@@ -55,11 +55,9 @@ class Company implements JsonSerializable
         return $this->name;
     }
 
-    public function setName(string $name): self
+    public function setName(string $name): void
     {
         $this->name = $name;
-
-        return $this;
     }
 
     /**
@@ -70,17 +68,15 @@ class Company implements JsonSerializable
         return $this->works;
     }
 
-    public function addWork(Work $work): self
+    public function addWork(Work $work): void
     {
         if (!$this->works->contains($work)) {
             $this->works[] = $work;
             $work->setCompany($this);
         }
-
-        return $this;
     }
 
-    public function removeWork(Work $work): self
+    public function removeWork(Work $work): void
     {
         if ($this->works->contains($work)) {
             $this->works->removeElement($work);
@@ -89,8 +85,6 @@ class Company implements JsonSerializable
                 $work->setCompany(null);
             }
         }
-
-        return $this;
     }
 
     /**

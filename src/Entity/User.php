@@ -52,9 +52,16 @@ class User implements UserInterface, \JsonSerializable
      */
     private $fullName;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Export", mappedBy="employee")
+     * @var WorkExport[]
+     */
+    private $exports;
+
     public function __construct()
     {
         $this->works = new ArrayCollection();
+        $this->exports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,26 +74,17 @@ class User implements UserInterface, \JsonSerializable
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email): void
     {
         $this->email = $email;
 
-        return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUsername(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
@@ -96,26 +94,20 @@ class User implements UserInterface, \JsonSerializable
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles(array $roles): void
     {
         $this->roles = $roles;
 
-        return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getPassword(): string
     {
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): self
+    public function setPassword(string $password): void
     {
         $this->password = $password;
-
-        return $this;
     }
 
     /**
@@ -123,7 +115,7 @@ class User implements UserInterface, \JsonSerializable
      */
     public function getSalt()
     {
-        // not needed when using the "bcrypt" algorithm in security.yaml
+        // not needed when using self salted algorithm in security.yml (bcrypt, argon, etc]
     }
 
     /**
@@ -187,5 +179,32 @@ class User implements UserInterface, \JsonSerializable
             'id' => $this->id,
             'email' => $this->email
         ];
+    }
+
+    /**
+     * @return Collection|WorkExport[]
+     */
+    public function getExports(): Collection
+    {
+        return $this->exports;
+    }
+
+    public function addExport(WorkExport $export): void
+    {
+        if (!$this->exports->contains($export)) {
+            $this->exports[] = $export;
+            $export->setEmployee($this);
+        }
+    }
+
+    public function removeExport(WorkExport $export): void
+    {
+        if ($this->exports->contains($export)) {
+            $this->exports->removeElement($export);
+            // set the owning side to null (unless already changed)
+            if ($export->getEmployee() === $this) {
+                $export->setEmployee(null);
+            }
+        }
     }
 }

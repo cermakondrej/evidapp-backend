@@ -9,3 +9,13 @@ run: ## Generate JSON Schema from API Blueprint(s)
 
 cli: ## Go inside docker app
 	docker exec -it evidapp-backend-php-fpm bash
+
+run-phpcs: ## Run PHP Coding Standards Checker
+	docker exec evidapp-backend-php-fpm composer cs
+
+run-phpcs-fix: ## Run PHP Coding Standards Fixer
+	docker exec evidapp-backend-php-fpm composer csf
+
+run-phpstan: ## Run PHPStan
+	docker exec evidapp-backend-php-fpm composer phpstan
+
