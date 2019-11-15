@@ -7,7 +7,7 @@ namespace App\Service\Export;
 use App\Entity\WorkExport;
 use App\ValueObject\ExportOutput;
 
-class RegularWorkExporter
+class EmployeeWorkExporter
 {
 
     public function createExport(WorkExport $export): ExportOutput

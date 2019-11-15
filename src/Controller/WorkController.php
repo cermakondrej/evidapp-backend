@@ -67,7 +67,6 @@ class WorkController extends BaseController
         try {
             $object = $validator->validate($request->getContent(), Work::class, $work);
 
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();

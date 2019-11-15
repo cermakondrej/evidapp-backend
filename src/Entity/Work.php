@@ -74,7 +74,7 @@ class Work implements JsonSerializable
     private $employee;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Export", mappedBy="work")
+     * @ORM\OneToMany(targetEntity="App\Entity\WorkExport", mappedBy="work")
      * @var WorkExport[]
      */
     private $exports;
@@ -82,14 +82,6 @@ class Work implements JsonSerializable
     public function __construct()
     {
         $this->exports = new ArrayCollection();
-    }
-
-    public function __toString(): string
-    {
-        return $this->employee->getFullName() . " - "
-            . $this->getCompany()->getName()
-            . " - " . $this->getJob()->getName()
-            . " (" . $this->getWorkload() . ")";
     }
 
     public function getId(): ?int

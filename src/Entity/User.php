@@ -53,7 +53,7 @@ class User implements UserInterface, \JsonSerializable
     private $fullName;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Export", mappedBy="employee")
+     * @ORM\OneToMany(targetEntity="App\Entity\WorkExport", mappedBy="employee")
      * @var WorkExport[]
      */
     private $exports;

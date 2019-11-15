@@ -40,10 +40,6 @@ class Company implements JsonSerializable
         $this->works = new ArrayCollection();
     }
 
-    public function __toString(): ?string
-    {
-        return $this->name;
-    }
 
     public function getId(): ?int
     {

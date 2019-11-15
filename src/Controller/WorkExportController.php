@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\WorkExport;
-use App\Entity\VariableExport;
-use App\Entity\RegularExport;
-use App\Service\Export\RegularWorkExporter;
+use App\Entity\VariableWorkExport;
+use App\Entity\EmployeeWorkExport;
+use App\Service\Export\EmployeeWorkExporter;
 use App\Service\Export\VariableWorkExporter;
 use App\Validation\RequestValidator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("exports")
@@ -26,8 +27,7 @@ class WorkExportController extends BaseController
     public function variableAction(Request $request, RequestValidator $validator, VariableWorkExporter $exporter): JsonResponse
     {
         try{
-            $object = $validator->validate($request->getContent(), VariableExport::class);
-
+            $object = $validator->validate($request->getContent(), VariableWorkExport::class);
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
@@ -41,10 +41,10 @@ class WorkExportController extends BaseController
         }
     }
 
-    public function regularAction(Request $request, RequestValidator $validator, RegularWorkExporter $exporter): JsonResponse
+    public function regularAction(Request $request, RequestValidator $validator, EmployeeWorkExporter $exporter): JsonResponse
     {
         try{
-            $object = $validator->validate($request->getContent(), RegularExport::class);
+            $object = $validator->validate($request->getContent(), EmployeeWorkExport::class);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);

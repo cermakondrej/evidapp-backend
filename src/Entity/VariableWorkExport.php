@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use App\ValueObject\Shift;
+use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\VariableExportRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\VariableWorkExportRepository")
  */
-class VariableExport extends WorkExport implements JsonSerializable
+class VariableWorkExport extends WorkExport implements JsonSerializable
 {
     /**
-     * @ORM\Column(type="array", nullable=true)
-     * @var Shift[]
+     * @ORM\Column(type="json", nullable=true)
+     * @var array
      */
     private $shifts = [];
 
     /**
-     * @return Shift[]
+     * @return array|Shift[]
      */
     public function getShifts(): array
     {
@@ -27,12 +30,13 @@ class VariableExport extends WorkExport implements JsonSerializable
     }
 
     /**
-     * @param Shift[] $shifts
+     * @param array|Shift[] $shifts
      */
     public function setShifts(array $shifts): void
     {
         $this->shifts = $shifts;
     }
+
 
 
     /**

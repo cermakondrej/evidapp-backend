@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject\Absence;
+namespace App\ValueObject;
 
-class BaseAbsence
+use JsonSerializable;
+
+class Absence implements JsonSerializable
 {
     /** @var int */
     private $day;
@@ -29,6 +31,11 @@ class BaseAbsence
     }
 
 
-
-
+    public function jsonSerialize(): array
+    {
+        return [
+            "day" => $this->day,
+            "value" => $this->value
+        ];
+    }
 }

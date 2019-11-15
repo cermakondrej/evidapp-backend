@@ -83,6 +83,9 @@
     "fig/link-util": {
         "version": "1.0.0"
     },
+    "gesdinet/jwt-refresh-token-bundle": {
+        "version": "v0.8.3"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },

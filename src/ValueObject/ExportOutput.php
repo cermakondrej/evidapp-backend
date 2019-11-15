@@ -53,113 +53,81 @@ class ExportOutput implements JsonSerializable
     /** @var ExportRow[] */
     private $exportRows;
 
-    /**
-     * @param string $fullName
-     */
     public function setFullName(string $fullName): void
     {
         $this->fullName = $fullName;
     }
 
-    /**
-     * @param string $jobName
-     */
     public function setJobName(string $jobName): void
     {
         $this->jobName = $jobName;
     }
 
-    /**
-     * @param float $workload
-     */
     public function setWorkload(float $workload): void
     {
         $this->workload = $workload;
     }
 
-    /**
-     * @param string $companyName
-     */
     public function setCompanyName(string $companyName): void
     {
         $this->companyName = $companyName;
     }
 
-    /**
-     * @param int $month
-     */
     public function setMonth(int $month): void
     {
         $this->month = $month;
     }
 
-    /**
-     * @param int $year
-     */
     public function setYear(int $year): void
     {
         $this->year = $year;
     }
 
-    /**
-     * @param float $workHours
-     */
+    public function getMonth(): ?int
+    {
+        return $this->month;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
     public function setWorkHours(float $workHours): void
     {
         $this->workHours = $workHours;
     }
 
-    /**
-     * @param float $totalWorked
-     */
     public function setTotalWorked(float $totalWorked): void
     {
         $this->totalWorked = $totalWorked;
     }
 
-    /**
-     * @param float $totalVacation
-     */
     public function setTotalVacation(float $totalVacation): void
     {
         $this->totalVacation = $totalVacation;
     }
 
-    /**
-     * @param float $totalSickness
-     */
     public function setTotalSickness(float $totalSickness): void
     {
         $this->totalSickness = $totalSickness;
     }
 
-    /**
-     * @param float $totalUnpaidVacation
-     */
     public function setTotalUnpaidVacation(float $totalUnpaidVacation): void
     {
         $this->totalUnpaidVacation = $totalUnpaidVacation;
     }
 
-    /**
-     * @param float $totalNursing
-     */
     public function setTotalNursing(float $totalNursing): void
     {
         $this->totalNursing = $totalNursing;
     }
 
-    /**
-     * @param float $totalBillableFreeTime
-     */
     public function setTotalBillableFreeTime(float $totalBillableFreeTime): void
     {
         $this->totalBillableFreeTime = $totalBillableFreeTime;
     }
 
-    /**
-     * @param float $totalHours
-     */
     public function setTotalHours(float $totalHours): void
     {
         $this->totalHours = $totalHours;

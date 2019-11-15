@@ -46,6 +46,8 @@ class RequestValidator
             throw new BadRequestHttpException('Invalid body.');
         }
 
+//        $object = $this->serializer->deserialize($data, $model, 'json', ['object_to_populate' => $objectToPopulate]);
+
         $errors = $this->validator->validate($object);
 
         if ($errors->count()) {

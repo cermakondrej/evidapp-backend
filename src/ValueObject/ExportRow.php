@@ -85,7 +85,14 @@ class ExportRow implements JsonSerializable
     }
 
 
+    private function getFormatedDate(?DateTimeInterface $date): ?string
+    {
+        if($date !== null) {
+            return $date->format('H:i');
+        }
 
+        return null;
+    }
 
     /**
      * @inheritDoc
@@ -95,10 +102,10 @@ class ExportRow implements JsonSerializable
         return [
             'day' => $this->day,
             'dark_row' => $this->darkRow,
-            'work_start' => $this->workStart->format('H:i'),
-            'work_end' => $this->workEnd->format('H:i'),
-            'break_start' => $this->breakStart->format('H:i'),
-            'break_end' => $this->breakEnd->format('H:i'),
+            'work_start' => $this->getFormatedDate($this->workStart),
+            'work_end' => $this->getFormatedDate($this->workEnd),
+            'break_start' => $this->getFormatedDate($this->breakStart),
+            'break_end' => $this->getFormatedDate($this->breakEnd),
             'hours_worked' => $this->hoursWorked,
             'note' => $this->note
         ];

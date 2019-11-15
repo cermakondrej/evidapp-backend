@@ -4,20 +4,16 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\ValueObject\Absence\BillableFreeTime;
-use App\ValueObject\Absence\Nursing;
-use App\ValueObject\Absence\Sickness;
-use App\ValueObject\Absence\UnpaidVacation;
-use App\ValueObject\Absence\Vacation;
+use App\ValueObject\Absence;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity()
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discr", type="string")
- * @ORM\DiscriminatorMap({"employee" = "EmployeeExport", "variable" = "VariableExport"})
+ * @ORM\DiscriminatorMap({"employee" = "EmployeeWorkExport", "variable" = "VariableWorkExport"})
  */
-class WorkExport
+abstract class WorkExport
 {
     /**
      * @ORM\Id()
@@ -48,34 +44,34 @@ class WorkExport
     private $work;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     * @var Vacation[]
+     * @ORM\Column(type="json", nullable=true)
+     * @var Absence[]|array
      */
-    private $vacation = [];
+    private $vacation;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     * @var Sickness[]
+     * @ORM\Column(type="json", nullable=true)
+     * @var Absence[]|array
      */
-    private $sickness = [];
+    private $sickness;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     * @var UnpaidVacation[]
+     * @ORM\Column(type="json", nullable=true)
+     * @var Absence[]|array
      */
-    private $unpaidVacation = [];
+    private $unpaidVacation;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     * @var Nursing[]
+     * @ORM\Column(type="json", nullable=true)
+     * @var Absence[]|array
      */
-    private $nursing = [];
+    private $nursing;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     * @var BillableFreeTime[]
+     * @ORM\Column(type="json", nullable=true)
+     * @var Absence[]|array
      */
-    private $billableFreeTime = [];
+    private $billableFreeTime;
 
     /**
      * @ORM\Column(type="integer")
@@ -88,6 +84,7 @@ class WorkExport
      * @var int
      */
     private $month;
+
 
     public function getId(): ?int
     {
@@ -130,64 +127,84 @@ class WorkExport
         return $this;
     }
 
-    public function getVacation(): ?array
+    /**
+     * @return Absence[]|array
+     */
+    public function getVacation():array
     {
         return $this->vacation;
     }
 
-    public function setVacation(?array $vacation): self
+    /**
+     * @param Absence[]|array $vacation
+     */
+    public function setVacation($vacation): void
     {
         $this->vacation = $vacation;
-
-        return $this;
     }
 
-    public function getSickness(): ?array
+    /**
+     * @return Absence[]|array
+     */
+    public function getSickness(): array
     {
         return $this->sickness;
     }
 
-    public function setSickness(array $sickness): self
+    /**
+     * @param Absence[]|array $sickness
+     */
+    public function setSickness($sickness): void
     {
         $this->sickness = $sickness;
-
-        return $this;
     }
 
-    public function getUnpaidVacation(): ?array
+    /**
+     * @return Absence[]|array
+     */
+    public function getUnpaidVacation(): array
     {
         return $this->unpaidVacation;
     }
 
-    public function setUnpaidVacation(?array $unpaidVacation): self
+    /**
+     * @param Absence[]|array $unpaidVacation
+     */
+    public function setUnpaidVacation($unpaidVacation): void
     {
         $this->unpaidVacation = $unpaidVacation;
-
-        return $this;
     }
 
-    public function getNursing(): ?array
+    /**
+     * @return Absence[]|array
+     */
+    public function getNursing(): array
     {
         return $this->nursing;
     }
 
-    public function setNursing(?array $nursing): self
+    /**
+     * @param Absence[]|array $nursing
+     */
+    public function setNursing($nursing): void
     {
         $this->nursing = $nursing;
-
-        return $this;
     }
 
-    public function getBillableFreeTime(): ?array
+    /**
+     * @return Absence[]|array
+     */
+    public function getBillableFreeTime(): array
     {
         return $this->billableFreeTime;
     }
 
-    public function setBillableFreeTime(?array $billableFreeTime): self
+    /**
+     * @param Absence[]|array $billableFreeTime
+     */
+    public function setBillableFreeTime($billableFreeTime): void
     {
         $this->billableFreeTime = $billableFreeTime;
-
-        return $this;
     }
 
     public function getYear(): ?int
