@@ -24,10 +24,14 @@ class WorkExportController extends BaseController
     /**
      * @Route("/variable", name="variable_export", methods={"POST"})
      */
-    public function variableAction(Request $request, RequestValidator $validator, VariableWorkExporter $exporter): JsonResponse
+    public function variableAction(
+        Request $request,
+        RequestValidator $validator,
+        VariableWorkExporter $exporter
+    ): JsonResponse
     {
-        try{
-            $object = $validator->validate($request->getContent(), VariableWorkExport::class);
+        try {
+            $object = $validator->validate((string)$request->getContent(), VariableWorkExport::class);
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
@@ -35,16 +39,19 @@ class WorkExportController extends BaseController
             $export = $exporter->createExport($object);
 
             return $this->respondCreated($export);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
     }
 
-    public function regularAction(Request $request, RequestValidator $validator, EmployeeWorkExporter $exporter): JsonResponse
+    public function regularAction(
+        Request $request,
+        RequestValidator $validator,
+        EmployeeWorkExporter $exporter
+    ): JsonResponse
     {
-        try{
-            $object = $validator->validate($request->getContent(), EmployeeWorkExport::class);
+        try {
+            $object = $validator->validate((string)$request->getContent(), EmployeeWorkExport::class);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
@@ -53,11 +60,9 @@ class WorkExportController extends BaseController
             $export = $exporter->createExport($object);
 
             return $this->respondCreated($export);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
     /**
@@ -66,6 +71,5 @@ class WorkExportController extends BaseController
     public function detailAction(WorkExport $export): JsonResponse
     {
         return $this->respondWithResource($export);
-
     }
 }

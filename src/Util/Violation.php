@@ -50,6 +50,6 @@ class Violation
             return $text;
         }
 
-        return strtolower(preg_replace('~(?<=\\w)([A-Z])~', '_$1', $text));
+        return strtolower((string) preg_replace('~(?<=\\w)([A-Z])~', '_$1', $text));
     }
 }

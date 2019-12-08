@@ -6,17 +6,18 @@ namespace App\ValueObject;
 
 class Month
 {
-    /** @var DayInMonth[] */
-    private $daysInMonth;
 
     /** @var int */
     private $numberOfWorkingDays;
 
+    /** @var DayInMonth[] */
+    private $daysInMonth;
 
-    public function __construct(array $daysInMonth, int $numberOfWorkingDays)
+
+    public function __construct(int $numberOfWorkingDays, array $daysInMonth)
     {
-        $this->daysInMonth = $daysInMonth;
         $this->numberOfWorkingDays = $numberOfWorkingDays;
+        $this->daysInMonth = $daysInMonth;
     }
 
     /**
@@ -31,8 +32,4 @@ class Month
     {
         return $this->numberOfWorkingDays;
     }
-
-
-
-
 }

@@ -3,7 +3,6 @@
 
 namespace App\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -65,13 +64,11 @@ class BaseController extends AbstractController
     protected function respondCreated(object $object): JsonResponse
     {
         return $this->setStatusCode(JsonResponse::HTTP_CREATED)->respondWithResource($object);
-
     }
 
     protected function respondDeleted(): JsonResponse
     {
         return $this->setStatusCode(JsonResponse::HTTP_NO_CONTENT)->respond();
-
     }
 
     protected function respondWithPagination(Paginator $paginator): JsonResponse
@@ -109,9 +106,8 @@ class BaseController extends AbstractController
         ]);
     }
 
-    protected function respond(array $data = [], array $headers = [], bool $json = false): JsonResponse
+    protected function respond(array $data = [], array $headers = []): JsonResponse
     {
-        return new JsonResponse($data, $this->getStatusCode(), $headers, $json);
+        return new JsonResponse($data, $this->getStatusCode(), $headers, false);
     }
-
 }

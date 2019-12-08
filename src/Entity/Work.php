@@ -84,12 +84,12 @@ class Work implements JsonSerializable
         $this->exports = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getWorkload(): ?float
+    public function getWorkload(): float
     {
         return $this->workload;
     }
@@ -99,7 +99,7 @@ class Work implements JsonSerializable
         $this->workload = $workload;
     }
 
-    public function getStart(): ?DateTimeInterface
+    public function getStart(): DateTimeInterface
     {
         return $this->start;
     }
@@ -117,7 +117,6 @@ class Work implements JsonSerializable
     public function setBreakStart(DateTimeInterface $breakStart): void
     {
         $this->breakStart = $breakStart;
-
     }
 
     public function getBreakEnd(): ?DateTimeInterface
@@ -128,39 +127,36 @@ class Work implements JsonSerializable
     public function setBreakEnd(DateTimeInterface $breakEnd): void
     {
         $this->breakEnd = $breakEnd;
-
     }
 
-    public function getJob(): ?Job
+    public function getJob(): Job
     {
         return $this->job;
     }
 
-    public function setJob(?Job $job): void
+    public function setJob(Job $job): void
     {
         $this->job = $job;
     }
 
-    public function getCompany(): ?Company
+    public function getCompany(): Company
     {
         return $this->company;
     }
 
-    public function setCompany(?Company $company): void
+    public function setCompany(Company $company): void
     {
         $this->company = $company;
-
     }
 
-    public function getEmployee(): ?User
+    public function getEmployee(): User
     {
         return $this->employee;
     }
 
-    public function setEmployee(?User $employee): void
+    public function setEmployee(User $employee): void
     {
         $this->employee = $employee;
-
     }
 
     /**
@@ -190,6 +186,15 @@ class Work implements JsonSerializable
         }
     }
 
+    private function getFormatedDate(?DateTimeInterface $date): ?string
+    {
+        if ($date !== null) {
+            return $date->format('H:i');
+        }
+
+        return null;
+    }
+
     /**
      * @inheritDoc
      */
@@ -197,12 +202,14 @@ class Work implements JsonSerializable
     {
         return [
             'id' => $this->id,
+            'name' => "{$this->employee->getFullName()} - {$this->company->getName()} - {$this->job->getName()}" .
+                " ({$this->workload})",
             'workload' => $this->workload,
-            'start' => $this->start->format('H:i'),
-            'break_start' => $this->breakStart->format('H:i'),
-            'break_end' => $this->breakEnd->format('H:i'),
-            'job' => $this->job->getName(),
-            'company' => $this->company->getName(),
+            'start' => $this->getFormatedDate($this->start),
+            'break_start' => $this->getFormatedDate($this->breakStart),
+            'break_end' => $this->getFormatedDate($this->breakEnd),
+            'job' => $this->job,
+            'company' => $this->company,
             'employee' => $this->employee
         ];
     }

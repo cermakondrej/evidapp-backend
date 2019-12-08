@@ -23,11 +23,10 @@ class CompanyController extends BaseController
     public function listAction(CompanyRepository $repository, Request $request): JsonResponse
     {
         // TODO EXTRACT THIS INTO SOME KIND OF MIDDLEWARE
-        $limit = (int) $request->query->get('limit') ?? 25;
-        $page = (int) $request->query->get('page') ?? 1;
+        $limit = (int)$request->query->get('limit') ?? 25;
+        $page = (int)$request->query->get('page') ?? 1;
 
-        return $this->respondWithPagination($repository->findAllPaginated($limit, $page));
-
+        return $this->respond($repository->findAll());
     }
 
     /**
@@ -36,7 +35,6 @@ class CompanyController extends BaseController
     public function detailAction(Company $company): JsonResponse
     {
         return $this->respondWithResource($company);
-
     }
 
     /**
@@ -45,19 +43,17 @@ class CompanyController extends BaseController
     public function newAction(Request $request, RequestValidator $validator): JsonResponse
     {
 
-        try{
-            $object = $validator->validate($request->getContent(), Company::class);
+        try {
+            $object = $validator->validate((string)$request->getContent(), Company::class);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
 
             return $this->respondCreated($object);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
 
@@ -67,7 +63,7 @@ class CompanyController extends BaseController
     public function editAction(Request $request, RequestValidator $validator, Company $company): JsonResponse
     {
         try {
-            $object = $validator->validate($request->getContent(), Company::class, $company);
+            $object = $validator->validate((string) $request->getContent(), Company::class, $company);
 
 
             $em = $this->getDoctrine()->getManager();
@@ -75,11 +71,9 @@ class CompanyController extends BaseController
             $em->flush();
 
             return $this->respondWithResource($object);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
     /**
@@ -93,5 +87,4 @@ class CompanyController extends BaseController
 
         return $this->respondDeleted();
     }
-
 }

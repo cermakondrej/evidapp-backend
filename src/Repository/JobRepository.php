@@ -27,5 +27,4 @@ class JobRepository extends ServiceEntityRepository
 
         return (new Paginator($qb, $limit))->paginate($page);
     }
-
 }

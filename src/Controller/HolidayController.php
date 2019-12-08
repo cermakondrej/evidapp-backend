@@ -23,7 +23,6 @@ class HolidayController extends BaseController
     {
 
         return $this->respond($repository->findAll());
-
     }
 
     /**
@@ -32,7 +31,6 @@ class HolidayController extends BaseController
     public function detailAction(Holiday $holiday): JsonResponse
     {
         return $this->respondWithResource($holiday);
-
     }
 
 
@@ -42,19 +40,17 @@ class HolidayController extends BaseController
     public function newAction(Request $request, RequestValidator $validator): JsonResponse
     {
 
-        try{
-            $object = $validator->validate($request->getContent(), Holiday::class);
+        try {
+            $object = $validator->validate((string)$request->getContent(), Holiday::class);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
 
             return $this->respondCreated($object);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
     /**
@@ -63,18 +59,16 @@ class HolidayController extends BaseController
     public function editAction(Request $request, RequestValidator $validator, Holiday $holiday): JsonResponse
     {
         try {
-            $object = $validator->validate($request->getContent(), Holiday::class, $holiday);
+            $object = $validator->validate((string)$request->getContent(), Holiday::class, $holiday);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
 
             return $this->respondWithResource($object);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
     /**
@@ -88,5 +82,4 @@ class HolidayController extends BaseController
 
         return $this->respondDeleted();
     }
-
 }

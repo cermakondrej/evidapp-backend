@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\ValueObject;
+namespace App\DTO;
 
 use JsonSerializable;
 
@@ -53,42 +53,29 @@ class ExportOutput implements JsonSerializable
     /** @var ExportRow[] */
     private $exportRows;
 
-    public function setFullName(string $fullName): void
-    {
+    public function __construct(
+        string $fullName,
+        string $jobName,
+        float $workload,
+        string $companyName,
+        int $month,
+        int $year
+    ) {
         $this->fullName = $fullName;
-    }
-
-    public function setJobName(string $jobName): void
-    {
         $this->jobName = $jobName;
-    }
-
-    public function setWorkload(float $workload): void
-    {
         $this->workload = $workload;
-    }
-
-    public function setCompanyName(string $companyName): void
-    {
         $this->companyName = $companyName;
-    }
-
-    public function setMonth(int $month): void
-    {
         $this->month = $month;
-    }
-
-    public function setYear(int $year): void
-    {
         $this->year = $year;
     }
 
-    public function getMonth(): ?int
+
+    public function getMonth(): int
     {
         return $this->month;
     }
 
-    public function getYear(): ?int
+    public function getYear(): int
     {
         return $this->year;
     }
@@ -133,9 +120,6 @@ class ExportOutput implements JsonSerializable
         $this->totalHours = $totalHours;
     }
 
-    /**
-     * @param ExportRow[] $exportRows
-     */
     public function setExportRows(array $exportRows): void
     {
         $this->exportRows = $exportRows;
@@ -162,6 +146,4 @@ class ExportOutput implements JsonSerializable
             'export_rows' => $this->exportRows,
         ];
     }
-
-
 }

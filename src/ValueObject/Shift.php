@@ -24,12 +24,13 @@ class Shift
     /** @var DateTimeInterface|null */
     private $breakEnd;
 
-    public function __construct(int $day,
-                                DateTimeInterface $workStart,
-                                DateTimeInterface $workEnd,
-                                DateTimeInterface $breakStart = null,
-                                DateTimeInterface $breakEnd = null)
-    {
+    public function __construct(
+        int $day,
+        DateTimeInterface $workStart,
+        DateTimeInterface $workEnd,
+        DateTimeInterface $breakStart = null,
+        DateTimeInterface $breakEnd = null
+    ) {
         $this->day = $day;
         $this->workStart = $workStart;
         $this->workEnd = $workEnd;
@@ -61,6 +62,4 @@ class Shift
     {
         return $this->breakEnd;
     }
-
-
 }

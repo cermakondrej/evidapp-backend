@@ -21,12 +21,7 @@ class JobController extends BaseController
      */
     public function listAction(JobRepository $repository, Request $request): JsonResponse
     {
-        // TODO EXTRACT THIS INTO SOME KIND OF MIDDLEWARE
-        $limit = (int) $request->query->get('limit') ?? 25;
-        $page = (int) $request->query->get('page') ?? 1;
-
-        return $this->respondWithPagination($repository->findAllPaginated($limit, $page));
-
+        return $this->respond($repository->findAll());
     }
 
     /**
@@ -35,7 +30,6 @@ class JobController extends BaseController
     public function detailAction(Job $job): JsonResponse
     {
         return $this->respondWithResource($job);
-
     }
 
     /**
@@ -43,20 +37,17 @@ class JobController extends BaseController
      */
     public function newAction(Request $request, RequestValidator $validator): JsonResponse
     {
-
-        try{
-            $object = $validator->validate($request->getContent(), Job::class);
+        try {
+            $object = $validator->validate((string)$request->getContent(), Job::class);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
 
             return $this->respondCreated($object);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
 
@@ -66,7 +57,7 @@ class JobController extends BaseController
     public function editAction(Request $request, RequestValidator $validator, Job $job): JsonResponse
     {
         try {
-            $object = $validator->validate($request->getContent(), Job::class, $job);
+            $object = $validator->validate((string)$request->getContent(), Job::class, $job);
 
 
             $em = $this->getDoctrine()->getManager();
@@ -74,11 +65,9 @@ class JobController extends BaseController
             $em->flush();
 
             return $this->respondWithResource($object);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
     /**
@@ -92,5 +81,4 @@ class JobController extends BaseController
 
         return $this->respondDeleted();
     }
-
 }

@@ -28,7 +28,4 @@ class DayInMonth
     {
         return $this->isWeekend;
     }
-
-
-
 }

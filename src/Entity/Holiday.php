@@ -34,12 +34,12 @@ class Holiday implements JsonSerializable
      */
     private $month;
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getDay(): ?int
+    public function getDay(): int
     {
         return $this->day;
     }
@@ -49,7 +49,7 @@ class Holiday implements JsonSerializable
         $this->day = $day;
     }
 
-    public function getMonth(): ?int
+    public function getMonth(): int
     {
         return $this->month;
     }

@@ -64,12 +64,12 @@ class User implements UserInterface, \JsonSerializable
         $this->exports = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -77,7 +77,6 @@ class User implements UserInterface, \JsonSerializable
     public function setEmail(string $email): void
     {
         $this->email = $email;
-
     }
 
     public function getUsername(): string
@@ -97,7 +96,6 @@ class User implements UserInterface, \JsonSerializable
     public function setRoles(array $roles): void
     {
         $this->roles = $roles;
-
     }
 
     public function getPassword(): string
@@ -113,7 +111,7 @@ class User implements UserInterface, \JsonSerializable
     /**
      * @see UserInterface
      */
-    public function getSalt()
+    public function getSalt(): void
     {
         // not needed when using self salted algorithm in security.yml (bcrypt, argon, etc]
     }
@@ -121,7 +119,7 @@ class User implements UserInterface, \JsonSerializable
     /**
      * @see UserInterface
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
@@ -158,7 +156,7 @@ class User implements UserInterface, \JsonSerializable
         return $this;
     }
 
-    public function getFullName(): ?string
+    public function getFullName(): string
     {
         return $this->fullName;
     }
@@ -168,17 +166,6 @@ class User implements UserInterface, \JsonSerializable
         $this->fullName = $fullName;
 
         return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'email' => $this->email
-        ];
     }
 
     /**
@@ -206,5 +193,15 @@ class User implements UserInterface, \JsonSerializable
                 $export->setEmployee(null);
             }
         }
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'email' => $this->email,
+            'full_name' => $this->fullName,
+            'roles' => $this->roles
+        ];
     }
 }

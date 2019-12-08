@@ -22,7 +22,7 @@ class VariableWorkExport extends WorkExport implements JsonSerializable
     private $shifts = [];
 
     /**
-     * @return array|Shift[]
+     * @return Shift[]
      */
     public function getShifts(): array
     {
@@ -30,18 +30,13 @@ class VariableWorkExport extends WorkExport implements JsonSerializable
     }
 
     /**
-     * @param array|Shift[] $shifts
+     * @param Shift[] $shifts
      */
     public function setShifts(array $shifts): void
     {
         $this->shifts = $shifts;
     }
 
-
-
-    /**
-     * @inheritDoc
-     */
     public function jsonSerialize(): array
     {
         return [

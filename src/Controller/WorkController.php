@@ -25,8 +25,7 @@ class WorkController extends BaseController
         $limit = (int) $request->query->get('limit') ?? 25;
         $page = (int) $request->query->get('page') ?? 1;
 
-        return $this->respondWithPagination($repository->findAllPaginated($limit, $page));
-
+        return $this->respond($repository->findAll());
     }
 
     /**
@@ -35,7 +34,6 @@ class WorkController extends BaseController
     public function detailAction(Work $work): JsonResponse
     {
         return $this->respondWithResource($work);
-
     }
 
     /**
@@ -44,18 +42,16 @@ class WorkController extends BaseController
     public function newAction(Request $request, RequestValidator $validator): JsonResponse
     {
 
-        try{
-            $object = $validator->validate($request->getContent(), Work::class);
+        try {
+            $object = $validator->validate((string)$request->getContent(), Work::class);
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
 
             return $this->respondCreated($object);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
 
@@ -65,18 +61,16 @@ class WorkController extends BaseController
     public function editAction(Request $request, RequestValidator $validator, Work $work): JsonResponse
     {
         try {
-            $object = $validator->validate($request->getContent(), Work::class, $work);
+            $object = $validator->validate((string)$request->getContent(), Work::class, $work);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
             $em->flush();
 
             return $this->respondWithResource($object);
-
-        } catch(BadRequestHttpException $e){
+        } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
         }
-
     }
 
     /**
@@ -90,5 +84,4 @@ class WorkController extends BaseController
 
         return $this->respondDeleted();
     }
-
 }

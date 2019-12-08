@@ -11,7 +11,6 @@ use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 
-
 class EntityNormalizer extends ObjectNormalizer
 {
     /**
@@ -39,7 +38,7 @@ class EntityNormalizer extends ObjectNormalizer
     /**
      * @inheritDoc
      */
-    public function denormalize($data, $class, $format = null, array $context = [])
+    public function denormalize($data, $class, $format = null, array $context = []) : ?object
     {
         return $this->em->find($class, $data);
     }

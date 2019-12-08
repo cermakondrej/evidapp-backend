@@ -24,7 +24,7 @@ abstract class WorkExport
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      * @var string
      */
     private $jobName;
@@ -44,31 +44,31 @@ abstract class WorkExport
     private $work;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="json")
      * @var Absence[]|array
      */
     private $vacation;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="json")
      * @var Absence[]|array
      */
     private $sickness;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="json")
      * @var Absence[]|array
      */
     private $unpaidVacation;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="json")
      * @var Absence[]|array
      */
     private $nursing;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="json")
      * @var Absence[]|array
      */
     private $billableFreeTime;
@@ -85,42 +85,50 @@ abstract class WorkExport
      */
     private $month;
 
+    public function __construct()
+    {
+        $this->vacation = [];
+        $this->sickness = [];
+        $this->unpaidVacation = [];
+        $this->nursing = [];
+        $this->billableFreeTime = [];
+    }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getJobName(): ?string
+    public function getJobName(): string
     {
         return $this->jobName;
     }
 
-    public function setJobName(?string $jobName): self
+    public function setJobName(string $jobName): self
     {
         $this->jobName = $jobName;
 
         return $this;
     }
 
-    public function getEmployee(): ?User
+    public function getEmployee(): User
     {
         return $this->employee;
     }
 
-    public function setEmployee(?User $employee): self
+    public function setEmployee(User $employee): self
     {
         $this->employee = $employee;
 
         return $this;
     }
 
-    public function getWork(): ?Work
+    public function getWork(): Work
     {
         return $this->work;
     }
 
-    public function setWork(?Work $work): self
+    public function setWork(Work $work): self
     {
         $this->work = $work;
 
@@ -138,7 +146,7 @@ abstract class WorkExport
     /**
      * @param Absence[]|array $vacation
      */
-    public function setVacation($vacation): void
+    public function setVacation(array $vacation): void
     {
         $this->vacation = $vacation;
     }
@@ -154,7 +162,7 @@ abstract class WorkExport
     /**
      * @param Absence[]|array $sickness
      */
-    public function setSickness($sickness): void
+    public function setSickness(array $sickness): void
     {
         $this->sickness = $sickness;
     }
@@ -170,7 +178,7 @@ abstract class WorkExport
     /**
      * @param Absence[]|array $unpaidVacation
      */
-    public function setUnpaidVacation($unpaidVacation): void
+    public function setUnpaidVacation(array $unpaidVacation): void
     {
         $this->unpaidVacation = $unpaidVacation;
     }
@@ -186,7 +194,7 @@ abstract class WorkExport
     /**
      * @param Absence[]|array $nursing
      */
-    public function setNursing($nursing): void
+    public function setNursing(array $nursing): void
     {
         $this->nursing = $nursing;
     }
@@ -207,7 +215,7 @@ abstract class WorkExport
         $this->billableFreeTime = $billableFreeTime;
     }
 
-    public function getYear(): ?int
+    public function getYear(): int
     {
         return $this->year;
     }
@@ -219,7 +227,7 @@ abstract class WorkExport
         return $this;
     }
 
-    public function getMonth(): ?int
+    public function getMonth(): int
     {
         return $this->month;
     }

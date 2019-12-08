@@ -40,12 +40,12 @@ class Job implements JsonSerializable
         $this->works = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -82,9 +82,6 @@ class Job implements JsonSerializable
         }
     }
 
-    /**
-     * @inheritDoc
-     */
     public function jsonSerialize(): array
     {
         return [

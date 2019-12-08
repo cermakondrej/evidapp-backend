@@ -26,8 +26,6 @@ class CompanyRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('c');
 
-        return (new Paginator($qb, $limit))->pagina0te($page);
-
+        return (new Paginator($qb, $limit))->paginate($page);
     }
-
 }

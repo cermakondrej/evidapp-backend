@@ -39,20 +39,25 @@ class RequestValidator
         if (!$data) {
             throw new BadRequestHttpException('Empty body.');
         }
-
         try {
-            $object = $this->serializer->deserialize($data, $model, 'json', ['object_to_populate' => $objectToPopulate]);
+            $object = $this->serializer->deserialize(
+                $data,
+                $model,
+                'json',
+                [
+                    'object_to_populate' => $objectToPopulate
+                ]
+            );
         } catch (Exception $e) {
             throw new BadRequestHttpException('Invalid body.');
         }
 
-//        $object = $this->serializer->deserialize($data, $model, 'json', ['object_to_populate' => $objectToPopulate]);
 
         $errors = $this->validator->validate($object);
 
         if ($errors->count()) {
-            throw new BadRequestHttpException(json_encode($this->violator->build($errors)));
+            throw new BadRequestHttpException((string) json_encode($this->violator->build($errors)));
         }
-        return $object;
+        return (object) $object;
     }
 }
