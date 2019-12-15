@@ -11,10 +11,9 @@ services:
       volumes:
         - db-data:/var/www/html
       environment:
-        - PSQL_ROOT_PASSWORD=docker_root
-        - PSQL_DATABASE=db
-        - PSQL_USER=user
-        - PSQL_PASSWORD=pw
+        POSTGRES_DB: evidapp
+        POSTGRES_USER: evuser
+        POSTGRES_PASSWORD: pass
       ports:
         - "9932:5432"
 
@@ -25,10 +24,9 @@ services:
       volumes:
         - db-data:/var/www/html
       environment:
-        - PSQL_ROOT_PASSWORD=docker_root
-        - PSQL_DATABASE=db_test
-        - PSQL_USER=user_test
-        - PSQL_PASSWORD=pw_test
+        POSTGRES_DB: evidapp_test
+        POSTGRES_USER: evuser_test
+        POSTGRES_PASSWORD: pass_test
       ports:
         - "9933:5432"
 
