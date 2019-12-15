@@ -10,6 +10,7 @@ use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="evidapp_user")
  */
 class User implements UserInterface, \JsonSerializable
 {
