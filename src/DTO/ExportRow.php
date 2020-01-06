@@ -9,39 +9,29 @@ use JsonSerializable;
 
 class ExportRow implements JsonSerializable
 {
-    /**
-     * @var int
-     */
+    /** @var int     */
     private $day;
 
     /** @var bool */
     private $darkRow = true;
 
-    /**
-     * @var DateTimeInterface|null
-     */
+    /** @var DateTimeInterface|null */
     private $workStart;
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $workEnd;
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $breakStart;
-    /**
-     * @var DateTimeInterface|null
-     */
-    private $breakEnd;
-    /**
-     * @var float|null
-     */
-    private $hoursWorked;
-    /**
-     * @var string|null
-     */
-    private $note;
 
+    /** @var DateTimeInterface|null */
+    private $workEnd;
+
+    /** @var DateTimeInterface|null */
+    private $breakStart;
+
+    /** @var DateTimeInterface|null */
+    private $breakEnd;
+
+    /** @var float|null */
+    private $hoursWorked;
+
+    /** @var string|null */
+    private $note;
 
     public function __construct(
         int $day,

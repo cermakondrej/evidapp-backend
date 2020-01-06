@@ -75,7 +75,7 @@ class Work implements JsonSerializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\WorkExport", mappedBy="work")
-     * @var WorkExport[]
+     * @var WorkExport[]|ArrayCollection
      */
     private $exports;
 
@@ -172,17 +172,6 @@ class Work implements JsonSerializable
         if (!$this->exports->contains($export)) {
             $this->exports[] = $export;
             $export->setWork($this);
-        }
-    }
-
-    public function removeExport(WorkExport $export): void
-    {
-        if ($this->exports->contains($export)) {
-            $this->exports->removeElement($export);
-            // set the owning side to null (unless already changed)
-            if ($export->getWork() === $this) {
-                $export->setWork(null);
-            }
         }
     }
 

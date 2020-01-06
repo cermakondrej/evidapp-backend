@@ -31,7 +31,7 @@ class Company implements JsonSerializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Work", mappedBy="company")
-     * @var Work[]
+     * @var Work[]|ArrayCollection
      */
     private $works;
 
@@ -68,17 +68,6 @@ class Company implements JsonSerializable
         if (!$this->works->contains($work)) {
             $this->works[] = $work;
             $work->setCompany($this);
-        }
-    }
-
-    public function removeWork(Work $work): void
-    {
-        if ($this->works->contains($work)) {
-            $this->works->removeElement($work);
-            // set the owning side to null (unless already changed)
-            if ($work->getCompany() === $this) {
-                $work->setCompany(null);
-            }
         }
     }
 

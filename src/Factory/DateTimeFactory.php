@@ -9,6 +9,10 @@ use DateTimeImmutable;
 
 class DateTimeFactory
 {
+    public function create(string $dateTime): DateTimeInterface
+    {
+        return new DateTimeImmutable($dateTime);
+    }
 
     public function createOrNull(?string $dateTime): ?DateTimeInterface
     {

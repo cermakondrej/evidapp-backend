@@ -31,7 +31,7 @@ class Job implements JsonSerializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Work", mappedBy="job")
-     * @var Work[]
+     * @var Work[]|ArrayCollection
      */
     private $works;
 
@@ -68,17 +68,6 @@ class Job implements JsonSerializable
         if (!$this->works->contains($work)) {
             $this->works[] = $work;
             $work->setJob($this);
-        }
-    }
-
-    public function removeWork(Work $work): void
-    {
-        if ($this->works->contains($work)) {
-            $this->works->removeElement($work);
-            // set the owning side to null (unless already changed)
-            if ($work->getJob() === $this) {
-                $work->setJob(null);
-            }
         }
     }
 

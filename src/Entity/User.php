@@ -42,7 +42,7 @@ class User implements UserInterface, \JsonSerializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Work", mappedBy="employee")
-     * @var Work[]
+     * @var Work[]|ArrayCollection
      */
     private $works;
 
@@ -55,7 +55,7 @@ class User implements UserInterface, \JsonSerializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\WorkExport", mappedBy="employee")
-     * @var WorkExport[]
+     * @var WorkExport[]|ArrayCollection
      */
     private $exports;
 
@@ -112,9 +112,9 @@ class User implements UserInterface, \JsonSerializable
     /**
      * @see UserInterface
      */
-    public function getSalt(): void
+    public function getSalt(): ?string
     {
-        // not needed when using self salted algorithm in security.yml (bcrypt, argon, etc]
+        return "SALT";
     }
 
     /**
@@ -139,19 +139,6 @@ class User implements UserInterface, \JsonSerializable
         if (!$this->works->contains($work)) {
             $this->works[] = $work;
             $work->setEmployee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWork(Work $work): self
-    {
-        if ($this->works->contains($work)) {
-            $this->works->removeElement($work);
-            // set the owning side to null (unless already changed)
-            if ($work->getEmployee() === $this) {
-                $work->setEmployee(null);
-            }
         }
 
         return $this;
@@ -182,17 +169,6 @@ class User implements UserInterface, \JsonSerializable
         if (!$this->exports->contains($export)) {
             $this->exports[] = $export;
             $export->setEmployee($this);
-        }
-    }
-
-    public function removeExport(WorkExport $export): void
-    {
-        if ($this->exports->contains($export)) {
-            $this->exports->removeElement($export);
-            // set the owning side to null (unless already changed)
-            if ($export->getEmployee() === $this) {
-                $export->setEmployee(null);
-            }
         }
     }
 
