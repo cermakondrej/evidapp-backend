@@ -4,11 +4,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Serializer\SerializerInterface;
+use JMS\Serializer\SerializerInterface;
 use App\Util\Paginator;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class BaseController extends AbstractController
 {
@@ -23,10 +25,13 @@ class BaseController extends AbstractController
      */
     private $serializer;
 
+    /** @var KernelInterface */
+    private $appKernel;
 
-    public function __construct(SerializerInterface $serializer)
+    public function __construct(SerializerInterface $serializer, KernelInterface $appKernel)
     {
         $this->serializer = $serializer;
+        $this->appKernel = $appKernel;
     }
 
     public function getStatusCode(): int
@@ -56,9 +61,14 @@ class BaseController extends AbstractController
         return $this->setStatusCode(JsonResponse::HTTP_INTERNAL_SERVER_ERROR)->respondWithError($message);
     }
 
+    protected function respondWithFile(string $route): BinaryFileResponse
+    {
+        return new BinaryFileResponse($this->appKernel->getProjectDir() . '/static/' . $route);
+    }
     protected function respondWithResource(object $object): JsonResponse
     {
-        return new JsonResponse($object, $this->getStatusCode(), [], false);
+        $data = $this->serializer->serialize($object, 'json');
+        return new JsonResponse($data, $this->getStatusCode(), [], true);
     }
 
     protected function respondCreated(object $object): JsonResponse
@@ -108,6 +118,7 @@ class BaseController extends AbstractController
 
     protected function respond(array $data = [], array $headers = []): JsonResponse
     {
-        return new JsonResponse($data, $this->getStatusCode(), $headers, false);
+        $data = $this->serializer->serialize($data, 'json');
+        return new JsonResponse($data, $this->getStatusCode(), $headers, true);
     }
 }

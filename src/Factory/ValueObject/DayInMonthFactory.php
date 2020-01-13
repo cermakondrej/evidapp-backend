@@ -21,7 +21,9 @@ class DayInMonthFactory
 
     public function create(int $day, int $month, int $year): DayInMonth
     {
-        $holidays = $this->entityManager->getRepository(Holiday::class)->findAll();
+        $holidays = $this->entityManager->getRepository(Holiday::class)->findBy([
+            'year' => $year
+        ]);
         $isHoliday = false;
         /** @var Holiday $holiday */
         foreach ($holidays as $holiday) {

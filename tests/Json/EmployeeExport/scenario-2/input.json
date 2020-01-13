@@ -1,0 +1,14 @@
+{
+  "job_name": "Test",
+  "employee": 1,
+  "work": 7,
+  "work_start": "08:00",
+  "break_start": "12:00",
+  "year": 2019,
+  "month": 3,
+  "vacation": [],
+  "sickness": [],
+  "unpaid_vacation": [],
+  "nursing": [],
+  "billable_free_time": []
+}

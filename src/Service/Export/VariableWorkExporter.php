@@ -62,7 +62,6 @@ class VariableWorkExporter
 
         $exportRows = [];
         $hoursWorked = 0;
-        $totalHours = 0;
 
         $shifts = $this->shiftFactory->createMultiple($export->getShifts());
 
@@ -72,22 +71,22 @@ class VariableWorkExporter
 
             $worked = $this->computeHoursWorked($shift);
             $hoursWorked += $worked;
-            $outputRow->setHoursWorked($worked);
+            // TODO extract all number_format into single function
+            $outputRow->setHoursWorked(number_format($worked,2));
             $this->checkHolidayOrWeekend($outputRow, $dayInMonth);
 
             $exportRows[$shift->getDay()] = $outputRow;
         }
 
         $month = $this->monthFactory->create($export->getMonth(), $export->getYear());
-        $totalHours += $this->absenceHandler->handleAbsences($exportRows, $output, $export);
+        $this->absenceHandler->handleAbsences($exportRows, $output, $export);
 
 
         $this->fillRest($exportRows, $month);
 
-        $output->setWorkHours($month->getNumberOfWorkingDays() * $export->getWork()->getWorkload());
+        $output->setWorkHours(number_format($month->getNumberOfWorkingDays() * $export->getWork()->getWorkload(), 2));
 
-        $output->setTotalWorked($hoursWorked);
-        $output->setTotalHours($totalHours);
+        $output->setTotalWorked(number_format($hoursWorked, 2));
         // order exportRows by key
         ksort($exportRows);
         $output->setExportRows($exportRows);

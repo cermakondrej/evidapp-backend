@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\DTO;
 
 use DateTimeInterface;
-use JsonSerializable;
+use JMS\Serializer\Annotation\Type;
 
-class ExportRow implements JsonSerializable
+
+class ExportRow
 {
     /** @var int     */
     private $day;
@@ -15,20 +16,32 @@ class ExportRow implements JsonSerializable
     /** @var bool */
     private $darkRow = true;
 
-    /** @var DateTimeInterface|null */
+    /**
+     * @Type("DateTime<'H:i'>")
+     * @var DateTimeInterface|null
+     */
     private $workStart;
 
-    /** @var DateTimeInterface|null */
+    /**
+     * @Type("DateTime<'H:i'>")
+     * @var DateTimeInterface|null
+     */
     private $workEnd;
 
-    /** @var DateTimeInterface|null */
+    /**
+     * @Type("DateTime<'H:i'>")
+     * @var DateTimeInterface|null
+     */
     private $breakStart;
 
-    /** @var DateTimeInterface|null */
+    /**
+     * @Type("DateTime<'H:i'>")
+     * @var DateTimeInterface|null
+     */
     private $breakEnd;
 
-    /** @var float|null */
-    private $hoursWorked;
+    /** @var string */
+    private $hoursWorked = "";
 
     /** @var string|null */
     private $note;
@@ -54,7 +67,7 @@ class ExportRow implements JsonSerializable
     }
 
 
-    public function setHoursWorked(float $hoursWorked): void
+    public function setHoursWorked(string $hoursWorked): void
     {
         $this->hoursWorked = $hoursWorked;
     }
@@ -64,30 +77,4 @@ class ExportRow implements JsonSerializable
         $this->note = $note;
     }
 
-
-    private function getFormattedDate(?DateTimeInterface $date): ?string
-    {
-        if ($date !== null) {
-            return $date->format('H:i');
-        }
-
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            'day' => $this->day,
-            'dark_row' => $this->darkRow,
-            'work_start' => $this->getFormattedDate($this->workStart),
-            'work_end' => $this->getFormattedDate($this->workEnd),
-            'break_start' => $this->getFormattedDate($this->breakStart),
-            'break_end' => $this->getFormattedDate($this->breakEnd),
-            'hours_worked' => $this->hoursWorked,
-            'note' => $this->note
-        ];
-    }
 }

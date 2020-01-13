@@ -35,11 +35,11 @@ class AbsenceHandler
         $totalNursing = $this->handleNursing($output, $export->getNursing(), $exportOutput);
         $totalSickness = $this->handleSickness($output, $export->getSickness(), $exportOutput);
 
-        $exportOutput->setTotalBillableFreeTime($totalBillable);
-        $exportOutput->setTotalVacation($totalVacation);
-        $exportOutput->setTotalUnpaidVacation($totalUnpaidVacation);
-        $exportOutput->setTotalNursing($totalNursing);
-        $exportOutput->setTotalSickness($totalSickness);
+        $exportOutput->setTotalBillableFreeTime(number_format($totalBillable, 2));
+        $exportOutput->setTotalVacation(number_format($totalVacation, 2));
+        $exportOutput->setTotalUnpaidVacation(number_format($totalUnpaidVacation, 2));
+        $exportOutput->setTotalNursing(number_format($totalNursing, 2));
+        $exportOutput->setTotalSickness(number_format($totalSickness, 2));
 
         return $totalNursing + $totalUnpaidVacation + $totalVacation + $totalBillable + $totalSickness;
     }

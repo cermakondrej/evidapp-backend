@@ -20,6 +20,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class WorkExportController extends BaseController
 {
+    /**
+     * @Route("/template", name="template", methods={"GET"})
+     */
+    public function templateAction()
+    {
+        return $this->respondWithFile('templates/export.xls');
+    }
 
     /**
      * @Route("/variable", name="variable_export", methods={"POST"})
@@ -63,6 +70,7 @@ class WorkExportController extends BaseController
             $em->flush();
 
             $export = $exporter->createExport($object);
+
             return $this->respondCreated($export);
         } catch (BadRequestHttpException $e) {
             return $this->respondInvalidRequest($e->getMessage());
