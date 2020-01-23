@@ -40,8 +40,8 @@ class ExportRow
      */
     private $breakEnd;
 
-    /** @var string */
-    private $hoursWorked = "";
+    /** @var string|null */
+    private $hoursWorked;
 
     /** @var string|null */
     private $note;
@@ -72,7 +72,7 @@ class ExportRow
         $this->hoursWorked = $hoursWorked;
     }
 
-    public function setNote(?string $note): void
+    public function setNote(string $note): void
     {
         $this->note = $note;
     }

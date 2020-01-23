@@ -25,7 +25,7 @@ class WorkExportController extends BaseController
      */
     public function templateAction()
     {
-        return $this->respondWithFile('templates/export.xls');
+        return $this->respondWithFile('templates/export-new.xlsx');
     }
 
     /**

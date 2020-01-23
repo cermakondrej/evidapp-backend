@@ -130,7 +130,7 @@ class EmployeeWorkExporter
         $extraHours = fmod($remainingHours, $weeks['number_of_partial_days']);
 
         $partialWeeksNum = count($weeks['partial']);
-        
+
         // FILL THE PARTIAL WEEKS, TODO REFACTOR
         foreach ($weeks['partial'] as $week) {
 
