@@ -1,3 +1,6 @@
-/vendor
-/.env
-/.env.*
+vendor
+var
+.git
+tests
+appveyor.yml
+.env*

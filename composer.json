@@ -40,7 +40,8 @@
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.14",
         "symfony/phpunit-bridge": "^5.0",
-        "symfony/profiler-pack": "*"
+        "symfony/profiler-pack": "*",
+        "symfony/twig-bundle": "4.3.*"
     },
     "config": {
         "preferred-install": {
