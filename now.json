@@ -11,6 +11,7 @@
     "PROJECT_NAME": "evidapp-backend",
     "APP_ENV": "prod",
     "APP_SECRET": "@evidapp-backend.app-secret",
+    "NOW_DEPLOYMENT": "fukthishacking",
     "DATABASE_URL": "@evidapp-backend.db-url",
     "MAILER_URL": "null://localhost",
     "JWT_SECRET_KEY": "@evidapp-backend.jwt-passphrase",

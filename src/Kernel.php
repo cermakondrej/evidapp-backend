@@ -15,6 +15,28 @@ class Kernel extends BaseKernel
 
     const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheDir()
+    {
+        if (isset($_SERVER['NOW_DEPLOYMENT'])) {
+            return '/tmp/symfony/cache/'.$this->environment;
+        }
+        return $this->getProjectDir().'/var/cache/'.$this->environment;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLogDir()
+    {
+        if (isset($_SERVER['NOW_DEPLOYMENT'])) {
+            return '/tmp/symfony/log';
+        }
+        return $this->getProjectDir().'/var/log';
+    }
+
     public function registerBundles()
     {
         $contents = require $this->getProjectDir().'/config/bundles.php';
