@@ -11,7 +11,7 @@
   ],
   "env": {
     "PROJECT_NAME": "evidapp-backend",
-    "APP_ENV": "prod",
+    "APP_ENV": "dev",
     "APP_SECRET": "@evidapp-backend.app-secret",
     "NOW_DEPLOYMENT": "fukthishacking",
     "DATABASE_URL": "@evidapp-backend.db-url",
