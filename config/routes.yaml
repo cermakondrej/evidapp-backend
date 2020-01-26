@@ -1,6 +1,6 @@
 api_login_check:
-    path: /api/login_check
+    path: /v1/auth/login
 
 api:
-    prefix: /api
+    prefix: /v1
     resource: '../src/Controller'

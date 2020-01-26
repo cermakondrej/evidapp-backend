@@ -20,9 +20,6 @@ class Kernel extends BaseKernel
      */
     public function getCacheDir()
     {
-        if (isset($_SERVER['NOW_DEPLOYMENT'])) {
-            return '/tmp/symfony/cache/'.$this->environment;
-        }
         return $this->getProjectDir().'/var/cache/'.$this->environment;
     }
 
@@ -31,9 +28,6 @@ class Kernel extends BaseKernel
      */
     public function getLogDir()
     {
-        if (isset($_SERVER['NOW_DEPLOYMENT'])) {
-            return '/tmp/symfony/log';
-        }
         return $this->getProjectDir().'/var/log';
     }
 
