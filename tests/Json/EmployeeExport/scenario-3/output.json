@@ -1,0 +1,217 @@
+{
+  "full_name": "Admin user",
+  "job_name": "Test",
+  "workload": 0.15,
+  "company_name": "TSCHP",
+  "month": 4,
+  "year": 2019,
+  "work_hours": "26.40",
+  "total_worked": "26.40",
+  "total_vacation": "0.00",
+  "total_sickness": "0.00",
+  "total_unpaid_vacation": "0.00",
+  "total_nursing": "0.00",
+  "total_billable_free_time": "0.00",
+  "export_rows": [
+    {
+      "day": 1,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "11:00",
+      "hours_worked": "2.00"
+    },
+    {
+      "day": 2,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 3,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 4,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 5,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 6,
+      "dark_row": true,
+      "hours_worked": "",
+      "note": "Víkend"
+    },
+    {
+      "day": 7,
+      "dark_row": true,
+      "hours_worked": "",
+      "note": "Víkend"
+    },
+    {
+      "day": 8,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "11:00",
+      "hours_worked": "2.00"
+    },
+    {
+      "day": 9,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 10,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 11,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 12,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 13,
+      "dark_row": true,
+      "hours_worked": "",
+      "note": "Víkend"
+    },
+    {
+      "day": 14,
+      "dark_row": true,
+      "hours_worked": "",
+      "note": "Víkend"
+    },
+    {
+      "day": 15,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "11:00",
+      "hours_worked": "2.00"
+    },
+    {
+      "day": 16,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 17,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 18,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 19,
+      "dark_row": true,
+      "hours_worked": "1.20",
+      "note": "Státní Svátek"
+    },
+    {
+      "day": 20,
+      "dark_row": true,
+      "hours_worked": "",
+      "note": "Víkend"
+    },
+    {
+      "day": 21,
+      "dark_row": true,
+      "hours_worked": "",
+      "note": "Víkend"
+    },
+    {
+      "day": 22,
+      "dark_row": true,
+      "hours_worked": "1.20",
+      "note": "Státní Svátek"
+    },
+    {
+      "day": 23,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "11:00",
+      "hours_worked": "2.00"
+    },
+    {
+      "day": 24,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 25,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 26,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 27,
+      "dark_row": true,
+      "hours_worked": "",
+      "note": "Víkend"
+    },
+    {
+      "day": 28,
+      "dark_row": true,
+      "hours_worked": "",
+      "note": "Víkend"
+    },
+    {
+      "day": 29,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    },
+    {
+      "day": 30,
+      "dark_row": false,
+      "work_start": "09:00",
+      "work_end": "10:00",
+      "hours_worked": "1.00"
+    }
+  ]
+}

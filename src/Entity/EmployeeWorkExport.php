@@ -5,28 +5,48 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
+use DateTimeInterface;
+use JMS\Serializer\Annotation\Type;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmployeeWorkExportRepository")
  */
-class EmployeeWorkExport extends WorkExport implements JsonSerializable
+class EmployeeWorkExport extends WorkExport
 {
 
+    /**
+     * @ORM\Column(type="time")
+     * @Type("DateTimeImmutable<'H:i'>")
+     * @var DateTimeInterface
+     */
+    private $workStart;
 
-    public function jsonSerialize(): array
+    /**
+     * @ORM\Column(type="time")
+     * @Type("DateTimeImmutable<'H:i'>")
+     * @var DateTimeInterface
+     */
+    private $breakStart;
+
+    public function getWorkStart(): DateTimeInterface
     {
-        return [
-            'id' => $this->getId(),
-            'job_name' => $this->getJobName(),
-            'employee' => $this->getEmployee(),
-            'vacation' => $this->getVacation(),
-            'unpaid_vacation' => $this->getUnpaidVacation(),
-            'sickness' => $this->getSickness(),
-            'nursing' => $this->getNursing(),
-            'billable_free_time' => $this->getBillableFreeTime(),
-            'year' => $this->getYear(),
-            'month' => $this->getMonth()
-        ];
+        return $this->workStart;
     }
+
+    public function setWorkStart(DateTimeInterface $workStart): void
+    {
+        $this->workStart = $workStart;
+    }
+
+    public function getBreakStart(): DateTimeInterface
+    {
+        return $this->breakStart;
+    }
+
+    public function setBreakStart(DateTimeInterface $breakStart): void
+    {
+        $this->breakStart = $breakStart;
+    }
+
+
 }

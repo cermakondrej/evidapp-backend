@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace App\Factory;
 
 use DateTimeInterface;
-use DateTimeImmutable;
+use DateTime;
 
 class DateTimeFactory
 {
+    public function create(string $dateTime): DateTimeInterface
+    {
+        return new DateTime($dateTime);
+    }
 
     public function createOrNull(?string $dateTime): ?DateTimeInterface
     {
@@ -16,6 +20,6 @@ class DateTimeFactory
             return null;
         }
 
-        return new DateTimeImmutable($dateTime);
+        return new DateTime($dateTime);
     }
 }

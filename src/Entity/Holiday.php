@@ -5,17 +5,18 @@ namespace App\Entity;
 
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use JsonSerializable;
+use JMS\Serializer\Annotation\Exclude;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\HolidayRepository")
  */
-class Holiday implements JsonSerializable
+class Holiday
 {
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Exclude()
      * @var int
      */
     private $id;
@@ -33,6 +34,13 @@ class Holiday implements JsonSerializable
      * @var int
      */
     private $month;
+
+    /**
+     * @Assert\NotBlank
+     * @ORM\Column(type="integer")
+     * @var int
+     */
+    private $year;
 
     public function getId(): int
     {
@@ -59,14 +67,13 @@ class Holiday implements JsonSerializable
         $this->month = $month;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize(): array
+    public function getYear(): int
     {
-        return [
-            'day' => $this->day,
-            'month' => $this->month
-        ];
+        return $this->year;
+    }
+
+    public function setYear(int $year): void
+    {
+        $this->year = $year;
     }
 }

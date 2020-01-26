@@ -20,17 +20,25 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class WorkExportController extends BaseController
 {
+    /**
+     * @Route("/template", name="template", methods={"GET"})
+     */
+    public function templateAction()
+    {
+        return $this->respondWithFile('templates/export-new.xlsx');
+    }
 
     /**
      * @Route("/variable", name="variable_export", methods={"POST"})
      */
-    public function variableAction(
+    public function variableExportAction(
         Request $request,
         RequestValidator $validator,
         VariableWorkExporter $exporter
     ): JsonResponse
     {
         try {
+            /** @var VariableWorkExport $object */
             $object = $validator->validate((string)$request->getContent(), VariableWorkExport::class);
             $em = $this->getDoctrine()->getManager();
             $em->persist($object);
@@ -44,13 +52,17 @@ class WorkExportController extends BaseController
         }
     }
 
-    public function regularAction(
+    /**
+     * @Route("/employee", name="employee_export", methods={"POST"})
+     */
+    public function employeeExportAction(
         Request $request,
         RequestValidator $validator,
         EmployeeWorkExporter $exporter
     ): JsonResponse
     {
         try {
+            /** @var EmployeeWorkExport $object */
             $object = $validator->validate((string)$request->getContent(), EmployeeWorkExport::class);
 
             $em = $this->getDoctrine()->getManager();

@@ -49,7 +49,7 @@ class RequestValidator
                 ]
             );
         } catch (Exception $e) {
-            throw new BadRequestHttpException('Invalid body.');
+            throw new BadRequestHttpException('Invalid body. ' . $e->getMessage());
         }
 
 

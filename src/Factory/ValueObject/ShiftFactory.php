@@ -7,7 +7,7 @@ namespace App\Factory\ValueObject;
 use App\Factory\DateTimeFactory;
 use App\ValueObject\Shift;
 use DateTimeInterface;
-use Exception;
+use DateTimeImmutable;
 
 class ShiftFactory
 {
@@ -24,24 +24,20 @@ class ShiftFactory
         $this->dateTimeFactory = $dateTimeFactory;
     }
 
-
-    /**
-     * @param array
-     * @return Shift[]|array
-     * @throws Exception
-     */
     public function createMultiple(array $inputShifts): array
     {
         // TODO Refactor this please, I did this tired af with harsh deadline
         $shifts = [];
         foreach ($inputShifts as $shift) {
-            $start = $this->dateTimeFactory->createOrNull($shift[self::WORK_START]);
-            $end = $this->dateTimeFactory->createOrNull($shift[self::WORK_END]);
+            $start = $this->dateTimeFactory->create($shift[self::WORK_START]);
+            $end = $this->dateTimeFactory->create($shift[self::WORK_END]);
             $breakStart = $this->dateTimeFactory->createOrNull($shift[self::BREAK_START]);
             $breakEnd = $this->dateTimeFactory->createOrNull($shift[self::BREAK_END]);
             $day = (int)$start->format('d');
 
             if (!$this->isSameDay($start, $end)) {
+
+                /** @var DateTimeImmutable $midnight */
                 $midnight = clone($end);
                 $midnight = $midnight->setTime(0, 0, 0, 0);
 

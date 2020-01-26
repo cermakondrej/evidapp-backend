@@ -15,17 +15,17 @@ security:
       pattern: ^/_(profiler|wdt)
       security: false
     login:
-      pattern:  ^/api/login_check
+      pattern:  ^/v1/auth/login
       stateless: true
       anonymous: true
       provider: app_user_provider
       json_login:
-        check_path:               /api/login_check
+        check_path:               /v1/auth/login
         success_handler:          lexik_jwt_authentication.handler.authentication_success
         failure_handler:          lexik_jwt_authentication.handler.authentication_failure
 
     refresh:
-      pattern:  ^/api/auth/refresh
+      pattern:  ^/v1/auth/refresh
       stateless: true
       anonymous: true
 
@@ -37,6 +37,6 @@ security:
           - lexik_jwt_authentication.jwt_token_authenticator
 
   access_control:
-    - { path: ^/api/auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/api/auth/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/v1/auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/v1/auth/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }

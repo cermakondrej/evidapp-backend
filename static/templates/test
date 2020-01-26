@@ -1,0 +1,45 @@
+                    console.log(worksheet)
+
+                    worksheet['E2'] = {t: 's', v: this.exportData.full_name}
+                    worksheet['E3'] = {t: 's', v: this.exportData.job_name}
+                    worksheet['E4'] = {t: 's', v: this.exportData.workload}
+                    worksheet['H4'] = {t: 's', v: this.exportData.company_name}
+                    worksheet['E5'] = {t: 's', v: this.exportData.work_hours}
+                    worksheet['E6'] = {t: 's', v: this.exportData.month}
+                    worksheet['E7'] = {t: 's', v: this.exportData.year}
+
+                    worksheet['G43'] = {t: 's', v: this.exportData.total_sickness}
+                    worksheet['G44'] = {t: 's', v: this.exportData.total_vacation}
+                    worksheet['G45'] = {t: 's', v: this.exportData.total_unpaid_vacation}
+                    worksheet['G46'] = {t: 's', v: this.exportData.total_nursing}
+                    worksheet['G47'] = {t: 's', v: this.exportData.total_billable_free_time}
+
+                    this.exportData.export_rows.forEach((element, index) =>{
+                        let row = index+constant
+
+                        worksheet['B' + row] = {t: 's', v: element.day}
+
+                        if(typeof element.work_start !== 'undefined') {
+                            worksheet['C' + row] = {t: 'd', v: element.work_start}
+                        }
+
+                        if(typeof element.work_end !== 'undefined') {
+                            worksheet['C' + row] = {t: 'd', v: element.work_start}
+                        }
+
+                        if(typeof element.break_start !== 'undefined') {
+                            worksheet['C' + row] = {t: 'd', v: element.work_start}
+                        }
+
+                        if(typeof element.break_end !== 'undefined') {
+                            worksheet['C' + row] = {t: 'd', v: element.work_start}
+                        }
+
+                        if(typeof element.hours_worked !== 'undefined') {
+                            worksheet['C' + row] = {t: 'd', v: moment(+element.hours_worked*3600*1000).format('HH:mm')}
+                        }
+
+                        worksheet['G' + row] = {t: 's', v: (element.hours_worked === "") ? "" : }
+                        worksheet['H' + row] = {t: 's', v: (typeof element.note === 'undefined') ? "" : element.note}
+
+                    })

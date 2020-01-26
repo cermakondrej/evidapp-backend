@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Service\Export;
 
-use App\Entity\WorkExport;
+use App\Entity\VariableWorkExport;
 use App\Factory\DTO\ExportOutputFactory;
 use App\Factory\DTO\ExportRowFactory;
-use App\Factory\ValueObject\AbsenceFactory;
 use App\Factory\ValueObject\DayInMonthFactory;
 use App\Factory\ValueObject\MonthFactory;
 use App\Factory\ValueObject\ShiftFactory;
 use App\ValueObject\DayInMonth;
-use App\ValueObject\Absence;
 use App\DTO\ExportOutput;
 use App\DTO\ExportRow;
 use App\ValueObject\Month;
@@ -20,14 +18,14 @@ use App\ValueObject\Shift;
 use DateTimeImmutable;
 use DateInterval;
 
-class VariableWorkExporter implements WorkExporterInterface
+class VariableWorkExporter
 {
 
     /** @var ShiftFactory */
     private $shiftFactory;
 
-    /** @var AbsenceFactory */
-    private $absenceFactory;
+    /** @var AbsenceHandler */
+    private $absenceHandler;
 
     /** @var DayInMonthFactory */
     private $dayInMonthFactory;
@@ -43,14 +41,14 @@ class VariableWorkExporter implements WorkExporterInterface
 
     public function __construct(
         ShiftFactory $shiftFactory,
-        AbsenceFactory $absenceFactory,
+        AbsenceHandler $absenceHandler,
         DayInMonthFactory $dayInMonthFactory,
         MonthFactory $monthFactory,
         ExportRowFactory $exportRowFactory,
         ExportOutputFactory $exportOutputFactory
     ) {
         $this->shiftFactory = $shiftFactory;
-        $this->absenceFactory = $absenceFactory;
+        $this->absenceHandler = $absenceHandler;
         $this->dayInMonthFactory = $dayInMonthFactory;
         $this->monthFactory = $monthFactory;
         $this->exportRowFactory = $exportRowFactory;
@@ -58,13 +56,12 @@ class VariableWorkExporter implements WorkExporterInterface
     }
 
 
-    public function createExport(WorkExport $export): ExportOutput
+    public function createExport(VariableWorkExport $export): ExportOutput
     {
         $output = $this->exportOutputFactory->create($export);
 
         $exportRows = [];
         $hoursWorked = 0;
-        $totalHours = 0;
 
         $shifts = $this->shiftFactory->createMultiple($export->getShifts());
 
@@ -74,22 +71,22 @@ class VariableWorkExporter implements WorkExporterInterface
 
             $worked = $this->computeHoursWorked($shift);
             $hoursWorked += $worked;
-            $outputRow->setHoursWorked($worked);
+            // TODO extract all number_format into single function
+            $outputRow->setHoursWorked(number_format($worked,2));
             $this->checkHolidayOrWeekend($outputRow, $dayInMonth);
 
             $exportRows[$shift->getDay()] = $outputRow;
         }
 
         $month = $this->monthFactory->create($export->getMonth(), $export->getYear());
-        $totalHours += $this->handleAbsences($exportRows, $output, $export);
+        $this->absenceHandler->handleAbsences($exportRows, $output, $export);
 
 
         $this->fillRest($exportRows, $month);
 
-        $output->setWorkHours($month->getNumberOfWorkingDays() * $export->getWork()->getWorkload());
+        $output->setWorkHours(number_format($month->getNumberOfWorkingDays() * $export->getWork()->getWorkload(), 2));
 
-        $output->setTotalWorked($hoursWorked);
-        $output->setTotalHours($totalHours);
+        $output->setTotalWorked(number_format($hoursWorked, 2));
         // order exportRows by key
         ksort($exportRows);
         $output->setExportRows($exportRows);
@@ -109,95 +106,6 @@ class VariableWorkExporter implements WorkExporterInterface
             }
         }
     }
-
-    private function handleAbsences(array &$output, ExportOutput &$exportOutput, WorkExport $export): float
-    {
-        $totalBillable = $this->handleBillableFreeTime($output, $export->getBillableFreeTime(), $exportOutput);
-        $totalVacation = $this->handleVacation($output, $export->getVacation(), $exportOutput);
-        $totalUnpaidVacation = $this->handleUnpaidVacation($output, $export->getUnpaidVacation(), $exportOutput);
-        $totalNursing = $this->handleNursing($output, $export->getNursing(), $exportOutput);
-        $totalSickness = $this->handleSickness($output, $export->getSickness(), $exportOutput);
-
-        $exportOutput->setTotalBillableFreeTime($totalBillable);
-        $exportOutput->setTotalVacation($totalVacation);
-        $exportOutput->setTotalUnpaidVacation($totalUnpaidVacation);
-        $exportOutput->setTotalNursing($totalNursing);
-        $exportOutput->setTotalSickness($totalSickness);
-
-        return $totalNursing + $totalUnpaidVacation + $totalVacation + $totalBillable + $totalSickness;
-    }
-
-    private function handleBillableFreeTime(array &$output, array $billableFreeTime, ExportOutput $exportOutput): float
-    {
-        return $this->calculateAbsences($output, $billableFreeTime, 'Volno s náhradou mzdy', $exportOutput);
-    }
-
-    private function handleVacation(array &$output, array $vacation, ExportOutput $exportOutput): float
-    {
-        return $this->calculateAbsences($output, $vacation, 'Dovolená', $exportOutput);
-    }
-
-    private function handleUnpaidVacation(array &$output, array $billableFreeTime, ExportOutput $exportOutput): float
-    {
-        return $this->calculateAbsences($output, $billableFreeTime, 'Neplacené volno', $exportOutput);
-    }
-
-    private function handleNursing(array &$output, array $billableFreeTime, ExportOutput $exportOutput): float
-    {
-        return $this->calculateAbsences($output, $billableFreeTime, 'Ošetřování člena rodiny', $exportOutput);
-    }
-
-    private function handleSickness(array &$output, array $sickness, ExportOutput $exportOutput): float
-    {
-        $absenceHours = 0;
-        /** @var Absence $absence */
-        foreach ($sickness as $absence) {
-            $row = $this->handleAbsence($absence, $output);
-            $day = $this->dayInMonthFactory->create(
-                $absence->getDay(),
-                $exportOutput->getMonth(),
-                $exportOutput->getYear()
-            );
-            if (!$this->checkWeekend($row, $day)) {
-                $row->setNote('Nemocenská');
-                $absenceHours += $absence->getValue();
-            }
-        }
-        return $absenceHours;
-    }
-
-    private function calculateAbsences(array &$output, array $absences, string $note, ExportOutput $exportOutput): float
-    {
-        $absenceHours = 0;
-        /** @var Absence $absence */
-        foreach ($absences as $absence) {
-            $row = $this->handleAbsence($absence, $output);
-            $day = $this->dayInMonthFactory->create(
-                $absence->getDay(),
-                $exportOutput->getMonth(),
-                $exportOutput->getYear()
-            );
-            if (!$this->checkHolidayOrWeekend($row, $day)) {
-                $row->setNote($note);
-                $absenceHours += $absence->getValue();
-            }
-        }
-        return $absenceHours;
-    }
-
-
-    private function handleAbsence(Absence $absence, array &$output): ExportRow
-    {
-        if (!array_key_exists($absence->getDay(), $output)) {
-            $row = $this->exportRowFactory->createEmpty($absence->getDay());
-            $output[$absence->getDay()] = $row;
-            return $row;
-        }
-
-        $row = $output[$absence->getDay()];
-        return $row;
-    }
-
 
     private function computeHoursWorked(Shift $shift): float
     {
@@ -228,18 +136,6 @@ class VariableWorkExporter implements WorkExporterInterface
         return false;
     }
 
-    private function checkWeekend(ExportRow &$row, DayInMonth $day): bool
-    {
-        if ($day->isWeekend()) {
-            $row->setNote('Víkend');
-            return true;
-        }
-
-        $row->setDarkRow(false);
-        return false;
-    }
-
-    // TODO Extract date helpers
     private function subtractDateIntervals(DateInterval $a, DateInterval $b): DateInterval
     {
         $reference = new DateTimeImmutable;

@@ -28,7 +28,7 @@ class MonthFactory
 
         for ($cnt = 0; $start_date < $end_date; $cnt++) {
             $day = $this->dayInMonthFactory->create($cnt+1, $month, $year);
-            if ($day->isWeekend()) {
+            if (!$day->isWeekend()) {
                 $numberOfWorkingDays++;
             }
             $daysInMonth[]=$day;

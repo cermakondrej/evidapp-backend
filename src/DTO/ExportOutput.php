@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\DTO;
 
-use JsonSerializable;
+use JMS\Serializer\Annotation\Type;
 
-class ExportOutput implements JsonSerializable
+class ExportOutput
 {
     /** @var string */
     private $fullName;
@@ -26,31 +26,32 @@ class ExportOutput implements JsonSerializable
     /** @var int */
     private $year;
 
-    /** @var float */
+    /** @var string */
     private $workHours;
 
-    /** @var float */
+    /** @var string */
     private $totalWorked;
 
-    /** @var float */
+    /** @var string */
     private $totalVacation;
 
-    /** @var float */
+    /** @var string */
     private $totalSickness;
 
-    /** @var float */
+    /** @var string */
     private $totalUnpaidVacation;
 
-    /** @var float */
+    /** @var string */
     private $totalNursing;
 
-    /** @var float */
+    /** @var string */
     private $totalBillableFreeTime;
 
-    /** @var float */
-    private $totalHours;
+    /**
+     * @Type("array<App\DTO\ExportRow>")
+     * @var ExportRow[]
+     */
 
-    /** @var ExportRow[] */
     private $exportRows;
 
     public function __construct(
@@ -80,70 +81,45 @@ class ExportOutput implements JsonSerializable
         return $this->year;
     }
 
-    public function setWorkHours(float $workHours): void
+    public function setWorkHours(string $workHours): void
     {
         $this->workHours = $workHours;
     }
 
-    public function setTotalWorked(float $totalWorked): void
+    public function setTotalWorked(string $totalWorked): void
     {
         $this->totalWorked = $totalWorked;
     }
 
-    public function setTotalVacation(float $totalVacation): void
+    public function setTotalVacation(string $totalVacation): void
     {
         $this->totalVacation = $totalVacation;
     }
 
-    public function setTotalSickness(float $totalSickness): void
+    public function setTotalSickness(string $totalSickness): void
     {
         $this->totalSickness = $totalSickness;
     }
 
-    public function setTotalUnpaidVacation(float $totalUnpaidVacation): void
+    public function setTotalUnpaidVacation(string $totalUnpaidVacation): void
     {
         $this->totalUnpaidVacation = $totalUnpaidVacation;
     }
 
-    public function setTotalNursing(float $totalNursing): void
+    public function setTotalNursing(string $totalNursing): void
     {
         $this->totalNursing = $totalNursing;
     }
 
-    public function setTotalBillableFreeTime(float $totalBillableFreeTime): void
+    public function setTotalBillableFreeTime(string $totalBillableFreeTime): void
     {
         $this->totalBillableFreeTime = $totalBillableFreeTime;
     }
 
-    public function setTotalHours(float $totalHours): void
-    {
-        $this->totalHours = $totalHours;
-    }
 
     public function setExportRows(array $exportRows): void
     {
         $this->exportRows = $exportRows;
     }
 
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'full_name' => $this->fullName,
-            'job_name;' => $this->jobName,
-            'workload' => $this->workload,
-            'company_name' => $this->companyName,
-            'month' => $this->month,
-            'year' => $this->year,
-            'work_hours' => $this->workHours,
-            'total_worked' => $this->totalWorked,
-            'total_vacation' => $this->totalVacation,
-            'total_sickness' => $this->totalSickness,
-            'total_unpaid_vacation' => $this->totalUnpaidVacation,
-            'total_nursing' => $this->totalNursing,
-            'total_billable_free_time' => $this->totalBillableFreeTime,
-            'total_hours' => $this->totalHours,
-            'export_rows' => $this->exportRows,
-        ];
-    }
 }

@@ -5,14 +5,14 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Exclude;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Serializer\Annotation\SerializedName;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="evidapp_user")
  */
-class User implements UserInterface, \JsonSerializable
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -36,33 +36,27 @@ class User implements UserInterface, \JsonSerializable
 
     /**
      * @ORM\Column(type="string")
+     * @Exclude()
      * @var string
      */
     private $password;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Work", mappedBy="employee")
-     * @var Work[]
+     * @Exclude()
+     * @var Work[]|ArrayCollection
      */
     private $works;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @SerializedName("full_name")
      * @var string
      */
     private $fullName;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\WorkExport", mappedBy="employee")
-     * @var WorkExport[]
-     */
-    private $exports;
-
     public function __construct()
     {
         $this->works = new ArrayCollection();
-        $this->exports = new ArrayCollection();
     }
 
     public function getId(): int
@@ -112,9 +106,9 @@ class User implements UserInterface, \JsonSerializable
     /**
      * @see UserInterface
      */
-    public function getSalt(): void
+    public function getSalt(): ?string
     {
-        // not needed when using self salted algorithm in security.yml (bcrypt, argon, etc]
+        return "SALT";
     }
 
     /**
@@ -144,19 +138,6 @@ class User implements UserInterface, \JsonSerializable
         return $this;
     }
 
-    public function removeWork(Work $work): self
-    {
-        if ($this->works->contains($work)) {
-            $this->works->removeElement($work);
-            // set the owning side to null (unless already changed)
-            if ($work->getEmployee() === $this) {
-                $work->setEmployee(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getFullName(): string
     {
         return $this->fullName;
@@ -169,40 +150,4 @@ class User implements UserInterface, \JsonSerializable
         return $this;
     }
 
-    /**
-     * @return Collection|WorkExport[]
-     */
-    public function getExports(): Collection
-    {
-        return $this->exports;
-    }
-
-    public function addExport(WorkExport $export): void
-    {
-        if (!$this->exports->contains($export)) {
-            $this->exports[] = $export;
-            $export->setEmployee($this);
-        }
-    }
-
-    public function removeExport(WorkExport $export): void
-    {
-        if ($this->exports->contains($export)) {
-            $this->exports->removeElement($export);
-            // set the owning side to null (unless already changed)
-            if ($export->getEmployee() === $this) {
-                $export->setEmployee(null);
-            }
-        }
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'email' => $this->email,
-            'full_name' => $this->fullName,
-            'roles' => $this->roles
-        ];
-    }
 }

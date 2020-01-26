@@ -7,10 +7,16 @@ endif
 .DEFAULT_GOAL:=help
 
 ##@ Development
-.PHONY: run cli install
+.PHONY: run rund down cli install
 
 run: ## Run application
+	docker-compose up
+
+rund: ## Run application in detached mode
 	docker-compose up -d
+
+down: ## Kill and remove application containers
+	docker-compose down
 
 cli: ## Go inside docker app
 	docker exec -it evidapp bash
@@ -18,19 +24,25 @@ cli: ## Go inside docker app
 install: ## Install application dependencies
 	docker exec evidapp composer install
 
-##@ Standards and Analysis
-.PHONY: run-phpcs run-phpcs-fix run-phpstan run-phpmd
+##@ Testing
+.PHONY: test
 
-run-phpcs: ## Run PHP Coding Standards Checker
+test: ## Run all test suite
+	docker exec evidapp composer test
+
+##@ Standards and Analysis
+.PHONY: phpcs phpcsf phpstan phpmd
+
+phpcs: ## Run PHP Coding Standards Checker
 	docker exec evidapp composer cs
 
-run-phpcs-fix: ## Run PHP Coding Standards Fixer
+phpcs-fix: ## Run PHP Coding Standards Fixer
 	docker exec evidapp composer csf
 
-run-phpstan: ## Run PHPStan
+phpstan: ## Run PHPStan
 	docker exec evidapp composer phpstan
 
-run-phpmd: ## Run PHP Mess Detector
+phpmd: ## Run PHP Mess Detector
 	docker exec evidapp composer md
 
 .PHONY: help

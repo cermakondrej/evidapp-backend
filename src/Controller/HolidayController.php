@@ -22,7 +22,9 @@ class HolidayController extends BaseController
     public function listAction(HolidayRepository $repository, Request $request): JsonResponse
     {
 
-        return $this->respond($repository->findAll());
+        return $this->respond($repository->findBy([
+            'year' => $request->get('year')
+        ]));
     }
 
     /**

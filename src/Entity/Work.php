@@ -4,16 +4,19 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use DateTimeInterface;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use JsonSerializable;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\WorkRepository")
  */
-class Work implements JsonSerializable
+class Work
 {
     /**
      * @ORM\Id()
@@ -31,27 +34,30 @@ class Work implements JsonSerializable
     private $workload;
 
     /**
+     * @Type("DateTime<'H:i'>")
      * @Assert\NotBlank
      * @ORM\Column(type="time")
-     * @var DateTimeInterface
+     * @var DateTimeImmutable
      */
     private $start;
 
     /**
+     * @Type("DateTime<'H:i'>")
      * @ORM\Column(type="time", nullable=true)
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable
      */
     private $breakStart;
 
     /**
+     * @Type("DateTime<'H:i'>")
      * @ORM\Column(type="time", nullable=true)
-     * @var DateTimeInterface|null
+     * @var DateTimeImmutable
      */
     private $breakEnd;
 
     /**
      * @Assert\NotBlank
-     * @ORM\ManyToOne(targetEntity="App\Entity\Job", inversedBy="works")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Job")
      * @ORM\JoinColumn(nullable=false)
      * @var Job
      */
@@ -59,7 +65,7 @@ class Work implements JsonSerializable
 
     /**
      * @Assert\NotBlank
-     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="works")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company")
      * @ORM\JoinColumn(nullable=false)
      * @var Company
      */
@@ -75,7 +81,8 @@ class Work implements JsonSerializable
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\WorkExport", mappedBy="work")
-     * @var WorkExport[]
+     * @Exclude()
+     * @var WorkExport[]|ArrayCollection
      */
     private $exports;
 
@@ -87,6 +94,15 @@ class Work implements JsonSerializable
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @VirtualProperty()
+     */
+    public function getName(): string
+    {
+        return "{$this->employee->getFullName()} - {$this->company->getName()} - {$this->job->getName()}" .
+            " ({$this->workload})";
     }
 
     public function getWorkload(): float
@@ -104,27 +120,17 @@ class Work implements JsonSerializable
         return $this->start;
     }
 
-    public function setStart(DateTimeInterface $start): void
+    public function setStart(DateTimeImmutable $start): void
     {
         $this->start = $start;
     }
 
-    public function getBreakStart(): ?DateTimeInterface
-    {
-        return $this->breakStart;
-    }
-
-    public function setBreakStart(DateTimeInterface $breakStart): void
+    public function setBreakStart(DateTimeImmutable $breakStart): void
     {
         $this->breakStart = $breakStart;
     }
 
-    public function getBreakEnd(): ?DateTimeInterface
-    {
-        return $this->breakEnd;
-    }
-
-    public function setBreakEnd(DateTimeInterface $breakEnd): void
+    public function setBreakEnd(DateTimeImmutable $breakEnd): void
     {
         $this->breakEnd = $breakEnd;
     }
@@ -149,11 +155,6 @@ class Work implements JsonSerializable
         $this->company = $company;
     }
 
-    public function getEmployee(): User
-    {
-        return $this->employee;
-    }
-
     public function setEmployee(User $employee): void
     {
         $this->employee = $employee;
@@ -175,42 +176,4 @@ class Work implements JsonSerializable
         }
     }
 
-    public function removeExport(WorkExport $export): void
-    {
-        if ($this->exports->contains($export)) {
-            $this->exports->removeElement($export);
-            // set the owning side to null (unless already changed)
-            if ($export->getWork() === $this) {
-                $export->setWork(null);
-            }
-        }
-    }
-
-    private function getFormatedDate(?DateTimeInterface $date): ?string
-    {
-        if ($date !== null) {
-            return $date->format('H:i');
-        }
-
-        return null;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => "{$this->employee->getFullName()} - {$this->company->getName()} - {$this->job->getName()}" .
-                " ({$this->workload})",
-            'workload' => $this->workload,
-            'start' => $this->getFormatedDate($this->start),
-            'break_start' => $this->getFormatedDate($this->breakStart),
-            'break_end' => $this->getFormatedDate($this->breakEnd),
-            'job' => $this->job,
-            'company' => $this->company,
-            'employee' => $this->employee
-        ];
-    }
 }
