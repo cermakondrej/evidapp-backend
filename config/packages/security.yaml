@@ -1,4 +1,3 @@
-# api/config/packages/security.yaml
 security:
   encoders:
     App\Entity\User:

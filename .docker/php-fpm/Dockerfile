@@ -1,6 +1,5 @@
 FROM php:7.3-fpm
-# Your contacts, so people blame you afterwards
-MAINTAINER Ceron
+MAINTAINER RANDEF
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 WORKDIR /var/www/html
@@ -22,3 +21,4 @@ RUN apt-get update \
 
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl zip
+RUN composer install
