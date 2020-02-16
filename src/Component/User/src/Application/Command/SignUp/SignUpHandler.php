@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Command\User\SignUp;
+namespace EvidApp\User\Application\Command\SignUp;
 
 use EvidApp\Shared\Application\Command\CommandHandlerInterface;
 use EvidApp\User\Domain\Repository\UserRepositoryInterface;

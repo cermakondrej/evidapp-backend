@@ -54,10 +54,9 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/",
-            "EvidApp\\Common\\": "src/Component/Common/src/",
+            "EvidApp\\Shared\\": "src/Component/Shared/src/",
             "EvidApp\\Employment\\": "src/Component/Employment/src/",
             "EvidApp\\Export\\": "src/Component/Export/src/",
-            "EvidApp\\Security\\": "src/Component/Security/src/",
             "EvidApp\\User\\": "src/Component/User/src/"
         }
     },

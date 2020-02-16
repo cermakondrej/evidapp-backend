@@ -1,0 +1,30 @@
+version: "3.4"
+
+volumes:
+    db-data:
+
+services:
+    psql:
+      ports:
+        - "9932:5432"
+
+    webserver:
+      ports:
+        - "8000:80"
+      
+    rmq:
+      ports:
+        - "15672:15672"
+        - "5672:5672"
+
+    kibana:
+      image: docker.elastic.co/kibana/kibana:6.6.1
+      container_name: evidapp-kibana
+      ports:
+        - 5601:5601
+      volumes:
+        - "./.docker/kibana/config.yml:/usr/share/kibana/config/kibana.yml"
+
+    elasticsearch:
+      ports:
+        - "9200:9200"

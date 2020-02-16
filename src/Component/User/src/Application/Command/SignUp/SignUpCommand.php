@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Command\User\SignUp;
+namespace EvidApp\User\Application\Command\SignUp;
 
 use EvidApp\User\Domain\ValueObject\Auth\Credentials;
 use EvidApp\User\Domain\ValueObject\Auth\HashedPassword;

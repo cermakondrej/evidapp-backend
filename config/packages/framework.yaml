@@ -8,16 +8,10 @@ framework:
     # Remove or comment this section to explicitly disable session support.
     session:
         handler_id: ~
-        cookie_secure: auto
-        cookie_samesite: lax
 
     #esi: true
     #fragments: true
     php_errors:
         log: true
-
-    property_info:
-        enabled: true
-    serializer:
-        enabled: true
-        name_converter: serializer.name_converter.camel_case_to_snake_case
+    router:
+        strict_requirements: ~

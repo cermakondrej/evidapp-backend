@@ -1,29 +1,89 @@
 parameters:
     locale: 'en'
+    elastic:
+        hosts:
+            - '%env(ELASTIC_HOST)%'
+
+        env(ELASTIC_HOST): 'elasticsearch:9200'
 
 services:
     _defaults:
         autowire: true
         autoconfigure: true
+        public: false
+        bind:
+            $elasticConfig: '%elastic%'
+            $eventBus: '@broadway.event_handling.event_bus'
+            $eventStore: '@Broadway\EventStore\Dbal\DBALEventStore'
+            $eventProducer: '@old_sound_rabbit_mq.events_producer'
+
+    _instanceof:
+
+        EvidApp\Shared\Application\Command\CommandHandlerInterface:
+            public: true
+            tags:
+                - { name: messenger.message_handler, bus: messenger.bus.command }
+
+        EvidApp\Shared\Application\Query\QueryHandlerInterface:
+            public: true
+            tags:
+                - { name: messenger.message_handler, bus: messenger.bus.query }
+
+        Broadway\EventHandling\EventListener:
+            public: true
+            tags:
+                - { name: broadway.domain.event_listener }
+
+
+    EvidApp\User\:
+        resource: '../src/Component/User/src/*'
+        exclude: '../src/Component/User/src/**/{Migrations}'
+
+    EvidApp\Shared\:
+        resource: '../src/Component/Shared/src/*'
+        exclude:
+            - '../src/Component/Shared/src/**/{Migrations}'
 
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{EventSubscriber,Component,Tests,Kernel.php}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
+
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    App\Normalizer\EntityNormalizer:
-        public: false
-        autowire: true
-        autoconfigure: true
-        tags:
-            - { name: serializer.normalizer }
 
-    jwt_created_listener:
-        class: App\EventListener\JWTCreatedListener
+    EvidApp\Shared\Infrastructure\Bus\CommandBus:
+        arguments:
+            - '@messenger.bus.command'
+
+    EvidApp\Shared\Infrastructure\Bus\QueryBus:
+        arguments:
+            - '@messenger.bus.query'
+
+
+    ### Event Store
+
+    Broadway\EventStore\Dbal\DBALEventStore:
+        public: true
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '@broadway.serializer.payload'
+            - '@broadway.serializer.metadata'
+            - 'events'
+            - true
+            - '@broadway.uuid.converter'
+
+
+    ### UI Listeners
+
+    App\EventSubscriber\ExceptionSubscriber:
         tags:
-            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: onJWTCreated }
+            - { name: 'kernel.event_listener', event: 'kernel.exception' }
+
+    App\EventSubscriber\JsonBodyParserSubscriber:
+        tags:
+            - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest', priority: 100 }

@@ -25,7 +25,7 @@ final class CheckController extends CommandQueryController
      *     }
      * )
      */
-    public function __invoke(Request $request): JsonResponse
+    public function checkAction(Request $request): JsonResponse
     {
         $username = $request->get('_username');
 

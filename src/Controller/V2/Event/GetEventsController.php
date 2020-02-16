@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Http\Rest\Controller\Event;
+namespace App\Controller\V2\Event;
 
 use EvidApp\Shared\Application\Query\Collection;
 use EvidApp\Shared\Application\Query\Event\GetEvents\GetEventsQuery;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GetEventsController extends QueryController
+final class GetEventsController extends QueryController
 {
     /**
      * @Route(
@@ -21,7 +21,7 @@ class GetEventsController extends QueryController
      *     methods={"GET"}
      * )
      */
-    public function __invoke(Request $request): JsonResponse
+    public function getAllEvents(Request $request): JsonResponse
     {
         $page = $request->get('page', 1);
         $limit = $request->get('limit', 50);

@@ -6,7 +6,7 @@ namespace EvidApp\User\Application\Query\FindAll;
 
 use EvidApp\Shared\Infrastructure\Bus\QueryInterface;
 
-class FindALlQuery implements QueryInterface
+class FindAllQuery implements QueryInterface
 {
     /** @var int */
     public $page;

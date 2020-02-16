@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\UI\Http\Rest\Controller\User;
+namespace App\Controller\V2\User;
 
 use App\Application\Command\User\SignUp\SignUpCommand;
 use EvidApp\Shared\Application\Query\Item;

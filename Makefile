@@ -1,5 +1,11 @@
 MIN_MAKE_VERSION := 3.82
 
+env=dev
+compose=docker-compose -f docker-compose.yml -f docker-compose.$(env).yml
+
+export compose
+export env
+
 ifneq ($(MIN_MAKE_VERSION),$(firstword $(sort $(MAKE_VERSION) $(MIN_MAKE_VERSION))))
 $(error GNU Make $(MIN_MAKE_VERSION) or higher required)
 endif
@@ -7,28 +13,45 @@ endif
 .DEFAULT_GOAL:=help
 
 ##@ Development
-.PHONY: run rund down cli install
+.PHONY: start stop rebuild erase build artifact composer-update up db
 
-run: ## Run application
-	docker-compose up
+.PHONY: start
+start: erase build up db ## Clean current environment, recreate dependencies and spin up again
 
-run-d: ## Run application in detached mode
-	docker-compose up -d
+.PHONY: stop
+stop: ## Stop environment
+	$(compose) stop
 
-run-r: ## Run application with forced rebuild
-	docker-compose up --always-recreate-deps --build --force-recreate
+.PHONY: rebuild
+rebuild: start ## Same as start
 
-run-rd: ## Run application with forced rebuilder in detached mode
-	docker-compose up -d --always-recreate-deps --build --force-recreate
+.PHONY: erase
+erase: ## Stop and delete containers, clean volumes.
+		$(compose) stop
+		docker-compose rm -v -f
 
-down: ## Kill and remove application containers
-	docker-compose down
+.PHONY: build
+build: ## Build environment and initialize composer and project dependencies
+	$(compose) build
+	$(compose) run --rm php sh -lc 'xoff;COMPOSER_MEMORY_LIMIT=-1 composer install'
 
-cli: ## Go inside docker app
-	docker exec -it evidapp bash
+.PHONY: artifact
+artifact: ## Build production artifact
+	docker-compose -f docker-compose.prod.yml build
 
-install: ## Install application dependencies
-	docker exec evidapp composer install
+.PHONY: composer-update
+composer-update: ## Update project dependencies
+	$(compose) run --rm php sh -lc 'xoff;COMPOSER_MEMORY_LIMIT=-1 composer update'
+
+.PHONY: up
+up: ## Spin up environment
+	$(compose) up -d
+
+.PHONY: db
+db: ## Recreate database
+	$(compose) exec -T php sh -lc './bin/console d:d:d --force'
+	$(compose) exec -T php sh -lc './bin/console d:d:c'
+	$(compose) exec -T php sh -lc './bin/console d:s:c'
 
 ##@ Testing
 .PHONY: test

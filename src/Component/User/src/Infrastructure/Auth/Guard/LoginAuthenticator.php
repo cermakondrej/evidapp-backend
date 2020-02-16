@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\User\Auth\Guard;
+namespace EvidApp\User\Infrastructure\Auth\Guard;
 
 use EvidApp\User\Application\Command\SignIn\SignInCommand;
 use EvidApp\Shared\Application\Query\Item;
