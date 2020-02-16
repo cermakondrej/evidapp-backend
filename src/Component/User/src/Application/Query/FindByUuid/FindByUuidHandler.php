@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace EvidApp\User\Application\Query\FindByEmail;
 
-use EvidApp\Shared\Application\Query\Collection;
+use EvidApp\Shared\Application\Query\Item;
 use EvidApp\Shared\Application\Query\QueryHandlerInterface;
-use EvidApp\User\Application\Query\FindAll\FindALlQuery;
 use EvidApp\User\Infrastructure\Query\Repository\DatabaseUserReadRepository;
+use EvidApp\User\Infrastructure\Query\Projections\UserView;
 
 
-class FindAllHandler implements QueryHandlerInterface
+class FindByUuidHandler implements QueryHandlerInterface
 {
 
     /** @var DatabaseUserReadRepository */
@@ -21,10 +21,11 @@ class FindAllHandler implements QueryHandlerInterface
         $this->repository = $repository;
     }
 
-    public function __invoke(FindALlQuery $query): Collection
+    public function __invoke(FindByUuidQuery $query): Item
     {
-        $result = $this->repository->page($query->page, $query->limit);
+        /** @var UserView $userView */
+        $userView = $this->repository->oneByUuid($query->uuid);
 
-        return new Collection($query->page, $query->limit, $result['total'], $result['data']);
+        return new Item($userView);
     }
 }

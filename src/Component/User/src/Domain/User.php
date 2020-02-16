@@ -6,10 +6,10 @@ namespace EvidApp\User\Domain;
 
 use EvidApp\Shared\Domain\ValueObject\DateTime;
 use EvidApp\User\Domain\Event\UserEmailChanged;
+use EvidApp\User\Domain\Event\UserPasswordChanged;
 use EvidApp\User\Domain\Event\UserSignedIn;
 use EvidApp\User\Domain\Event\UserWasCreated;
 use EvidApp\User\Domain\Exception\InvalidCredentialsException;
-use EvidApp\User\Domain\Specification\SecurePasswordSpecificationInterface;
 use EvidApp\User\Domain\Specification\UniqueEmailSpecificationInterface;
 use EvidApp\User\Domain\ValueObject\Auth\Credentials;
 use EvidApp\User\Domain\ValueObject\Auth\HashedPassword;
@@ -41,7 +41,7 @@ class User extends EventSourcedAggregateRoot
         UniqueEmailSpecificationInterface $uniqueEmailSpecification
     ): self
     {
-        $uniqueEmailSpecification->isUnique($credentials->email);
+        $uniqueEmailSpecification->isUnique($credentials->email());
 
         $user = new self();
 
@@ -77,8 +77,8 @@ class User extends EventSourcedAggregateRoot
     {
         $this->uuid = $event->uuid;
 
-        $this->setEmail($event->credentials->email);
-        $this->setHashedPassword($event->credentials->password);
+        $this->setEmail($event->credentials->email());
+        $this->setHashedPassword($event->credentials->password());
         $this->setCreatedAt($event->createdAt);
     }
 

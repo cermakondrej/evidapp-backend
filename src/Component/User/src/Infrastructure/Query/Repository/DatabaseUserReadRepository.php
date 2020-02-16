@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EvidApp\User\Infrastructure\Query\Repository;
 
+use Assert\Assertion;
 use EvidApp\User\Domain\Repository\CheckUserByEmailInterface;
 use EvidApp\User\Domain\Repository\GetUserCredentialsByEmailInterface;
 use EvidApp\User\Domain\ValueObject\Email;
@@ -56,12 +57,21 @@ final class DatabaseUserReadRepository extends DatabaseRepository implements Che
         return $this->oneOrException($qb);
     }
 
-    public function all(): array
+    public function page(int $page = 1, int $limit = 50): array
     {
-        return $this->repository
+        Assertion::greaterThan($page, 0, 'Pagination need to be > 0');
+
+        // TODO implement pagination
+        $data = $this->repository
             ->createQueryBuilder('user')
             ->getQuery()
             ->getArrayResult();
+
+
+        return [
+            'data' => $data,
+            'total' => count($data),
+        ];
     }
 
     public function add(UserView $userRead): void
