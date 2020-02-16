@@ -1,19 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 namespace EvidApp\User\Domain\Repository;
 
-
-use EvidApp\User\Domain\Entity\User;
-use EvidApp\User\Domain\ValueObject\UserId;
+use EvidApp\User\Domain\User;
+use Ramsey\Uuid\UuidInterface;
 
 interface UserRepositoryInterface
 {
-    public function getOneByUuid(UserId $userId): User;
+    public function get(UuidInterface $uuid): User;
 
-    public function findOneByUuid(UserId $userId): ?User;
-
-    public function findOneByUsername(string $username): ?User;
-
-    public function save(User $user): void;
+    public function store(User $user): void;
 }

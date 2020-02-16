@@ -12,8 +12,14 @@ endif
 run: ## Run application
 	docker-compose up
 
-rund: ## Run application in detached mode
+run-d: ## Run application in detached mode
 	docker-compose up -d
+
+run-r: ## Run application with forced rebuild
+	docker-compose up --always-recreate-deps --build --force-recreate
+
+run-rd: ## Run application with forced rebuilder in detached mode
+	docker-compose up -d --always-recreate-deps --build --force-recreate
 
 down: ## Kill and remove application containers
 	docker-compose down
