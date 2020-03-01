@@ -16,12 +16,12 @@ services:
         POSTGRES_PASSWORD: pass
 
     php:
-      build: .docker/php-fpm
+      image: randef/alpine-php:7.4
       container_name: evidapp
       working_dir: /var/www/html
       volumes:
         - .:/var/www/html
-        - ./.docker/php-fpm/php-ini-overrides.ini:/etc/php/7.3/fpm/conf.d/99-overrides.ini
+        - ./.docker/php-fpm/php-ini-overrides.ini:/etc/php/7.4/fpm/conf.d/99-overrides.ini
       depends_on:
         - psql
         - rmq
@@ -37,7 +37,7 @@ services:
         - php
 
     workers:
-      image: jorge07/alpine-php:7.4-dev
+      image: randef/alpine-php:7.4
       container_name: evidapp-workers
       volumes:
         - .:/var/www/html
