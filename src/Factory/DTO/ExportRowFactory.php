@@ -24,12 +24,11 @@ class ExportRowFactory
         int $day,
         float $worked,
         \DateTimeInterface $workStart,
-        \DateTimeInterface $breakStart): ExportRow
-    {
+        \DateTimeInterface $breakStart
+    ): ExportRow {
         $workEnd = clone $workStart;
         $breakEnd =clone $breakStart;
-        if($worked > 6)
-        {
+        if ($worked > 6) {
             $row = new ExportRow(
                 $day,
                 $workStart,
@@ -38,7 +37,7 @@ class ExportRowFactory
                 $breakEnd->add(\DateInterval::createFromDateString('30 minutes'))
             );
 
-            $row->setHoursWorked(number_format($worked,2));
+            $row->setHoursWorked(number_format($worked, 2));
             $row->setDarkRow(false);
             return $row;
         }
@@ -49,7 +48,7 @@ class ExportRowFactory
             $workEnd->add(\DateInterval::createFromDateString(3600*$worked. ' seconds'))
         );
         $row->setDarkRow(false);
-        $row->setHoursWorked(number_format($worked,2));
+        $row->setHoursWorked(number_format($worked, 2));
         return $row;
     }
 

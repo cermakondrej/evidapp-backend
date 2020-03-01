@@ -41,6 +41,4 @@ class Job
     {
         $this->name = $name;
     }
-
-
 }

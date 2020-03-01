@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace EvidApp\Migrations;
+namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-
 
 final class Version20200217231554 extends AbstractMigration
 {

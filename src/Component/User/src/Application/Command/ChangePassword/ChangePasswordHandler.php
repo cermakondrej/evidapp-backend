@@ -24,5 +24,4 @@ class ChangePasswordHandler implements CommandHandlerInterface
 
         $this->userRepository->store($user);
     }
-
 }

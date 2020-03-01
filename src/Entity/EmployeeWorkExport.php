@@ -47,6 +47,4 @@ class EmployeeWorkExport extends WorkExport
     {
         $this->breakStart = $breakStart;
     }
-
-
 }

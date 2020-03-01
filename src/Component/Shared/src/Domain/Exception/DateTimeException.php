@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace EvidApp\Shared\Domain\Exception;
+
 use Exception;
 
 class DateTimeException extends Exception

@@ -7,7 +7,6 @@ namespace App\DTO;
 use DateTimeInterface;
 use JMS\Serializer\Annotation\Type;
 
-
 class ExportRow
 {
     /** @var int     */
@@ -76,5 +75,4 @@ class ExportRow
     {
         $this->note = $note;
     }
-
 }

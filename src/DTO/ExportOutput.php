@@ -121,5 +121,4 @@ class ExportOutput
     {
         $this->exportRows = $exportRows;
     }
-
 }

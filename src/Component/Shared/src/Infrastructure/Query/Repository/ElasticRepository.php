@@ -82,5 +82,4 @@ abstract class ElasticRepository
             'total' => $response['hits']['total'],
         ];
     }
-
 }

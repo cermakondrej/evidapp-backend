@@ -26,7 +26,12 @@ final class Item
     private function type(SerializableReadModel $model): string
     {
         $path = explode('\\', \get_class($model));
+        $type = array_pop($path);
 
-        return array_pop($path);
+        if($type === null) {
+            throw new \Exception("WOOPS");
+        }
+
+        return $type;
     }
 }

@@ -96,7 +96,7 @@ class UserView implements SerializableReadModel, JsonSerializable
         return [
             'uuid' => $this->getId(),
             'email' => $this->credentials->getEmail()->toString(),
-            'created_at' => $this->createdAt ? $this->createdAt->toString() : null,
+            'created_at' => $this->createdAt->toString(),
             'updated_at' => $this->updatedAt ? $this->updatedAt->toString() : null,
         ];
     }

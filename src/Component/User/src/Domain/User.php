@@ -30,8 +30,7 @@ class User extends EventSourcedAggregateRoot
         UuidInterface $uuid,
         Credentials $credentials,
         UniqueEmailSpecificationInterface $uniqueEmailSpecification
-    ): self
-    {
+    ): self {
         $uniqueEmailSpecification->isUnique($credentials->getEmail());
 
         $user = new self();
@@ -44,8 +43,7 @@ class User extends EventSourcedAggregateRoot
     public function changeEmail(
         Email $email,
         UniqueEmailSpecificationInterface $uniqueEmailSpecification
-    ): void
-    {
+    ): void {
         $uniqueEmailSpecification->isUnique($email);
         $this->apply(new UserEmailChanged($this->uuid, $email, DateTime::now()));
     }
@@ -78,6 +76,12 @@ class User extends EventSourcedAggregateRoot
         Assertion::notEq($this->email->toString(), $event->email->toString(), 'New email should be different');
 
         $this->setEmail($event->email);
+        $this->setUpdatedAt($event->updatedAt);
+    }
+
+    protected function applyUserPasswordChanged(UserPasswordChanged $event): void
+    {
+        $this->setHashedPassword($event->password);
         $this->setUpdatedAt($event->updatedAt);
     }
 

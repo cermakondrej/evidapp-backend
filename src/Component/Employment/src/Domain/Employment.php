@@ -1,8 +1,7 @@
 <?php
 
 
-namespace App\Component\Employment\Domain;
-
+namespace EvidApp\Employment\Domain;
 
 use EvidApp\Employment\Domain\ValueObject\Company;
 use EvidApp\Employment\Domain\ValueObject\Employee;
@@ -24,5 +23,4 @@ class Employment
         $this->employee = $employee;
         $this->workingHours = $workingHours;
     }
-
 }

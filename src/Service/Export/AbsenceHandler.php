@@ -142,7 +142,4 @@ class AbsenceHandler
         $row->setDarkRow(false);
         return false;
     }
-
-
-
 }

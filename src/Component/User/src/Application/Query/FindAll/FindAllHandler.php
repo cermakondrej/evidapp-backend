@@ -8,7 +8,6 @@ use EvidApp\Shared\Application\Query\Collection;
 use EvidApp\Shared\Application\Query\QueryHandlerInterface;
 use EvidApp\User\Infrastructure\Query\Repository\DatabaseUserReadRepository;
 
-
 class FindAllHandler implements QueryHandlerInterface
 {
     private DatabaseUserReadRepository $repository;

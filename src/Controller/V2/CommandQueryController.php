@@ -29,5 +29,4 @@ class CommandQueryController extends QueryController
     {
         $this->commandBus->handle($command);
     }
-
 }

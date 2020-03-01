@@ -15,8 +15,7 @@ class HolidayFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 
-        for($i = 2019; $i < 2026; $i++)
-        {
+        for ($i = 2019; $i < 2026; $i++) {
             $this->createHoliday(1, 1, $i, $manager);
             $this->createHoliday(1, 5, $i, $manager);
             $this->createHoliday(8, 5, $i, $manager);

@@ -175,5 +175,4 @@ class Work
             $export->setWork($this);
         }
     }
-
 }

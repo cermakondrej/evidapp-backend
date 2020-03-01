@@ -9,7 +9,6 @@ use EvidApp\User\Domain\Repository\UserRepositoryInterface;
 use EvidApp\User\Domain\Specification\UniqueEmailSpecificationInterface;
 use EvidApp\User\Domain\User;
 
-
 class SignUpHandler implements CommandHandlerInterface
 {
     private UserRepositoryInterface $userRepository;
@@ -17,8 +16,8 @@ class SignUpHandler implements CommandHandlerInterface
 
     public function __construct(
         UserRepositoryInterface $userRepository,
-        UniqueEmailSpecificationInterface $uniqueEmailSpecification)
-    {
+        UniqueEmailSpecificationInterface $uniqueEmailSpecification
+    ) {
         $this->userRepository = $userRepository;
         $this->uniqueEmailSpecification = $uniqueEmailSpecification;
     }

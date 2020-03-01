@@ -64,5 +64,4 @@ class WorkFixtures extends Fixture implements DependentFixtureInterface
             CompanyFixtures::class,
         );
     }
-
 }

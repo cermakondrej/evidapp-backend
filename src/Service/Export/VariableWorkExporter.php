@@ -72,7 +72,7 @@ class VariableWorkExporter
             $worked = $this->computeHoursWorked($shift);
             $hoursWorked += $worked;
             // TODO extract all number_format into single function
-            $outputRow->setHoursWorked(number_format($worked,2));
+            $outputRow->setHoursWorked(number_format($worked, 2));
             $this->checkHolidayOrWeekend($outputRow, $dayInMonth);
 
             $exportRows[$shift->getDay()] = $outputRow;

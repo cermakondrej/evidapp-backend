@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EvidApp\User\Infrastructure\Repository;
 
-
 use EvidApp\User\Domain\Repository\UserRepositoryInterface;
 use EvidApp\User\Domain\User;
 use Broadway\EventHandling\EventBus;

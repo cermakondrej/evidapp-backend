@@ -22,5 +22,4 @@ final class AuthenticationProvider
 
         return $this->JWTManager->create($auth);
     }
-
 }

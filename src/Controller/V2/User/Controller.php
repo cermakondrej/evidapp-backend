@@ -7,6 +7,7 @@ namespace App\Controller\V2\User;
 use EvidApp\Shared\Application\Query\Item;
 use EvidApp\Shared\Application\Query\Collection;
 use EvidApp\User\Application\Command\ChangeEmail\ChangeEmailCommand;
+use EvidApp\User\Application\Command\ChangePassword\ChangePasswordCommand;
 use EvidApp\User\Application\Query\FindAll\FindAllQuery;
 use App\Controller\V2\CommandQueryController;
 use Assert\Assertion;
@@ -85,4 +86,27 @@ final class Controller extends CommandQueryController
         return JsonResponse::create();
     }
 
+
+    /**
+     * @Route(
+     *     "/user/change-password/{uuid}",
+     *     name="change_user_password",
+     *     methods={"PATCH"}
+     * )
+     */
+    public function changePasswordAction(Request $request, string $uuid): JsonResponse
+    {
+        Assertion::notNull($uuid, "Uuid can\'t be null");
+
+        $password = $request->get('password');
+
+
+        Assertion::notNull($password, "New password can\'t be null");
+
+        $command = new ChangePasswordCommand($uuid, $password);
+
+        $this->exec($command);
+
+        return JsonResponse::create();
+    }
 }

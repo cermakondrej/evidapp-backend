@@ -32,7 +32,7 @@ final class UserPasswordChanged implements Serializable
 
         return new self(
             Uuid::fromString($data['uuid']),
-            HashedPassword::fromHash($data['email']),
+            HashedPassword::fromHash($data['password']),
             DateTime::fromString($data['updated_at'])
         );
     }

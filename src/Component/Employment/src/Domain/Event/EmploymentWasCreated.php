@@ -1,8 +1,7 @@
 <?php
 
 
-namespace App\Component\Employment\src\Domain\Event;
-
+namespace EvidApp\Employment\Domain\Event;
 
 class EmploymentWasCreated
 {

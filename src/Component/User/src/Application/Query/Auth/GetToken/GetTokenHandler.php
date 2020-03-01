@@ -27,5 +27,4 @@ class GetTokenHandler implements QueryHandlerInterface
 
         return $this->authenticationProvider->generateToken($uuid, $email, $hashedPassword);
     }
-
 }

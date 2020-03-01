@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace EvidApp\User\Infrastructure\Query;
 
-
 use EvidApp\User\Domain\Event\UserEmailChanged;
 use EvidApp\User\Domain\Event\UserPasswordChanged;
 use EvidApp\User\Domain\Event\UserWasCreated;

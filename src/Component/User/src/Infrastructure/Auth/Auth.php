@@ -7,12 +7,10 @@ namespace EvidApp\User\Infrastructure\Auth;
 use EvidApp\User\Domain\ValueObject\Auth\HashedPassword;
 use EvidApp\User\Domain\ValueObject\Email;
 use Ramsey\Uuid\UuidInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class Auth implements UserInterface
 {
-
     private UuidInterface $uuid;
     private Email $email;
     private HashedPassword $hashedPassword;

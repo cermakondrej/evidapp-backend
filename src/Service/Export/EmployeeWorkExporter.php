@@ -39,8 +39,7 @@ class EmployeeWorkExporter
         MonthFactory $monthFactory,
         ExportRowFactory $exportRowFactory,
         ExportOutputFactory $exportOutputFactory
-    )
-    {
+    ) {
         $this->absenceHandler = $absenceHandler;
         $this->dayInMonthFactory = $dayInMonthFactory;
         $this->monthFactory = $monthFactory;
@@ -80,15 +79,12 @@ class EmployeeWorkExporter
         $worked = 0;
         /** @var DayInMonth $day */
         foreach ($month->getDaysInMonth() as $key => $day) {
-
             $row = $this->exportRowFactory->createEmpty($key + 1);
 
             if ($day->isWeekend()) {
                 $row->setNote('Víkend');
                 $exportRows[$key + 1] = $row;
-
-            } else if ($day->isHoliday()) {
-
+            } elseif ($day->isHoliday()) {
                 $row->setNote('Státní Svátek');
                 $row->setHoursWorked(number_format(self::WORKDAY_HOURS * $workload, 2));
                 $worked += self::WORKDAY_HOURS * $workload;
@@ -113,7 +109,8 @@ class EmployeeWorkExporter
         foreach ($weeks['full'] as $week) {
             $extraHours = fmod($hoursPerWeek, 5);
             $overHours = $extraHours > 1 ? 1 : $extraHours;
-            $worked = $fullWeekHour + $overHours;;
+            $worked = $fullWeekHour + $overHours;
+            ;
             foreach ($week as $key => $day) {
                 $remainingHours -= $worked;
                 $extraHours -= $overHours;
@@ -133,14 +130,13 @@ class EmployeeWorkExporter
 
         // FILL THE PARTIAL WEEKS, TODO REFACTOR
         foreach ($weeks['partial'] as $week) {
-
             $weekExtraHours = $extraHours < 1 ? $extraHours : $extraHours/$partialWeeksNum;
             $weekExtraHours = $extraHours >= 1 && $weekExtraHours < 1 ? 1 : $weekExtraHours;
             $overHours = $weekExtraHours > 1 ? 1 : $weekExtraHours;
-            $worked = $partialDayHour + $overHours;;
+            $worked = $partialDayHour + $overHours;
+            ;
             --$partialWeeksNum;
             foreach ($week as $key => $day) {
-
                 $remainingHours -= $worked;
                 $extraHours -= $overHours;
                 $weekExtraHours -= $overHours;
@@ -148,18 +144,17 @@ class EmployeeWorkExporter
                 $row = $this->exportRowFactory->createEmployee((int)$key, $worked, $export->getWorkStart(), $export->getBreakStart());
 
                 $overHours = $weekExtraHours > 1 ? 1 : $weekExtraHours;
-                $worked = $partialDayHour + $overHours;;
+                $worked = $partialDayHour + $overHours;
+                ;
                 $exportRows[$key] = $row;
             }
         }
 
-       if($remainingHours != 0)
-       {
-           throw new \Exception("Remaining hours has to be 0. Actual: ". $remainingHours);
-       }
+        if ($remainingHours != 0) {
+            throw new \Exception("Remaining hours has to be 0. Actual: ". $remainingHours);
+        }
 
         return $workToDo;
-
     }
 
     private function getHoursPerFullWeek(float $workload): float
@@ -177,7 +172,6 @@ class EmployeeWorkExporter
         $numberOfPartialDays = 0;
 
         foreach ($month->getDaysInMonth() as $key => $day) {
-
             if (!$day->isHoliday() && !$day->isWeekend() && !array_key_exists($key + 1, $exportRows)) {
                 $week[$key + 1] = $day;
                 ++$cnt;
@@ -185,7 +179,6 @@ class EmployeeWorkExporter
             }
 
             if ($week) {
-
                 if ($cnt !== 5) {
                     $partialWeeks[] = $week;
                     $numberOfPartialDays += $cnt;
@@ -218,4 +211,3 @@ class EmployeeWorkExporter
         );
     }
 }
-

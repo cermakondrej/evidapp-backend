@@ -41,14 +41,13 @@ abstract class JsonApiTestCase extends WebTestCase
             'password' => $password ?? self::DEFAULT_PASS,
         ]);
 
-        if ($this->cli->getResponse()->getStatusCode() !== Response::HTTP_OK){
+        if ($this->cli->getResponse()->getStatusCode() !== Response::HTTP_OK) {
             throw new BadCredentialsException("Authentication failed, check your credentials or fixtures.");
         }
 
         $response = json_decode($this->cli->getResponse()->getContent(), true);
 
         $this->token = $response['token'];
-
     }
 
     protected function logout(): void

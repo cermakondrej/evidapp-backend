@@ -9,7 +9,6 @@ use EvidApp\Shared\Application\Query\QueryHandlerInterface;
 use EvidApp\User\Infrastructure\Query\Repository\DatabaseUserReadRepository;
 use EvidApp\User\Infrastructure\Query\Projections\UserView;
 
-
 class FindByUuidHandler implements QueryHandlerInterface
 {
 

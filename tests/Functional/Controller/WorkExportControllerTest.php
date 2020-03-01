@@ -51,7 +51,7 @@ class WorkExportControllerTest extends JsonApiTestCase
         self::assertJsonStringEqualsJsonFile(
             $this->getScenarioOutput($scenarioName),
             $response->getContent(),
-            );
+        );
     }
 
 
@@ -65,5 +65,4 @@ class WorkExportControllerTest extends JsonApiTestCase
     {
         return __DIR__ . "/../../Json/EmployeeExport/{$scenarioFolder}/output.json";
     }
-
 }

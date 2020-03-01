@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use App\ValueObject\Shift;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VariableWorkExportRepository")
  */

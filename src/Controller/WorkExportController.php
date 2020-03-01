@@ -35,8 +35,7 @@ class WorkExportController extends BaseController
         Request $request,
         RequestValidator $validator,
         VariableWorkExporter $exporter
-    ): JsonResponse
-    {
+    ): JsonResponse {
         try {
             /** @var VariableWorkExport $object */
             $object = $validator->validate((string)$request->getContent(), VariableWorkExport::class);
@@ -59,8 +58,7 @@ class WorkExportController extends BaseController
         Request $request,
         RequestValidator $validator,
         EmployeeWorkExporter $exporter
-    ): JsonResponse
-    {
+    ): JsonResponse {
         try {
             /** @var EmployeeWorkExport $object */
             $object = $validator->validate((string)$request->getContent(), EmployeeWorkExport::class);

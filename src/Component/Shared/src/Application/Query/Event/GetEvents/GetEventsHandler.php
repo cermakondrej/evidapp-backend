@@ -8,7 +8,6 @@ use EvidApp\Shared\Application\Query\Collection;
 use EvidApp\Shared\Application\Query\QueryHandlerInterface;
 use EvidApp\Shared\Domain\Event\EventRepositoryInterface;
 
-
 class GetEventsHandler implements QueryHandlerInterface
 {
     private EventRepositoryInterface $eventRepository;

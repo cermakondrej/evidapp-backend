@@ -29,5 +29,4 @@ class ChangeEmailHandler implements CommandHandlerInterface
 
         $this->userRepository->store($user);
     }
-
 }
