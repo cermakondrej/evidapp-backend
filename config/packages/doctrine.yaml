@@ -13,10 +13,10 @@ doctrine:
         charset: utf8
         url: '%env(resolve:DATABASE_URL)%'
         types:
-            uuid_binary: Ramsey\Uuid\Doctrine\UuidBinaryType
+            uuid: Ramsey\Uuid\Doctrine\UuidType
             datetime_immutable: EvidApp\Shared\Infrastructure\Doctrine\DateTimeType
-        mapping_types:
-            uuid_binary: binary
+            EvidApp\User\Domain\ValueObject\Email: EvidApp\User\Infrastructure\Doctrine\EmailType
+            EvidApp\User\Domain\ValueObject\Auth\HashedPassword: EvidApp\User\Infrastructure\Doctrine\HashedPasswordType
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -28,7 +28,6 @@ doctrine:
                 dir: '%kernel.project_dir%/config/mapping/orm/user/domain'
                 prefix: 'EvidApp\User\Domain'
                 alias: UserDomain
-
             UserProjections:
                 is_bundle: false
                 type: xml

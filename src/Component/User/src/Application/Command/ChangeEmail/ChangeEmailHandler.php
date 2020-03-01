@@ -10,12 +10,8 @@ use EvidApp\User\Domain\Specification\UniqueEmailSpecificationInterface;
 
 class ChangeEmailHandler implements CommandHandlerInterface
 {
-
-    /** @var UserRepositoryInterface */
-    private $userRepository;
-
-    /** @var UniqueEmailSpecificationInterface */
-    private $uniqueEmailSpecification;
+    private UserRepositoryInterface $userRepository;
+    private UniqueEmailSpecificationInterface $uniqueEmailSpecification;
 
     public function __construct(
         UserRepositoryInterface $userRepository,

@@ -10,12 +10,8 @@ use Elasticsearch\ClientBuilder;
 
 abstract class ElasticRepository
 {
-
-    /** @var string */
-    private $index;
-
-    /** @var Client */
-    private $client;
+    private string $index;
+    private Client $client;
 
     public function __construct(array $config, string $index)
     {

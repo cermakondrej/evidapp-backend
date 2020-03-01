@@ -10,9 +10,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 
 class SendEventsToElasticConsumer implements ConsumerInterface
 {
-    /** @var EventElasticRepository */
-    private $eventElasticRepository;
-
+    private EventElasticRepository $eventElasticRepository;
 
     public function __construct(EventElasticRepository $eventElasticRepository)
     {

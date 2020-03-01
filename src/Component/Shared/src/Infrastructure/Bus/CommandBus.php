@@ -6,14 +6,12 @@ namespace EvidApp\Shared\Infrastructure\Bus;
 
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Throwable;
 
 final class CommandBus
 {
     use MessageBusExceptionTrait;
 
-    /** @var MessageBusInterface */
-    private $messageBus;
+    private MessageBusINterface $messageBus;
 
     public function __construct(MessageBusInterface $messageBus)
     {

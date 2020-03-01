@@ -12,8 +12,7 @@ final class QueryBus
 {
     use MessageBusExceptionTrait;
 
-    /** @var MessageBusInterface */
-    private $messageBus;
+    private MessageBusInterface $messageBus;
 
     public function __construct(MessageBusInterface $messageBus)
     {
@@ -24,7 +23,6 @@ final class QueryBus
     {
         try {
             $envelope = $this->messageBus->dispatch($query);
-
             /** @var HandledStamp $stamp */
             $stamp = $envelope->last(HandledStamp::class);
 

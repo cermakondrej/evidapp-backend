@@ -14,17 +14,17 @@ security:
       security: false
 
     auth:
-      pattern:  ^/v1/auth
+      pattern:  ^/auth/check
       stateless: true
       anonymous: true
 
     signup:
-      pattern:  ^/v1/signup
+      pattern:  ^/auth/signup
       stateless: true
       anonymous: true
 
     secured:
-      pattern:  ^/v1
+      pattern:  ^/
       provider: users
       stateless: true
       guard:
@@ -32,6 +32,6 @@ security:
           - lexik_jwt_authentication.jwt_token_authenticator
 
   access_control:
-    - { path: ^/auth,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: ^/signup,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/auth/check,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/auth/signup,  roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/,        roles: IS_AUTHENTICATED_FULLY       }

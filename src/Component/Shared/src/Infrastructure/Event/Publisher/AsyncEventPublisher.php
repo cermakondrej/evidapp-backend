@@ -13,11 +13,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 final class AsyncEventPublisher implements EventPublisherInterface, EventSubscriberInterface, EventListener
 {
-    /** @var ProducerInterface */
-    private $eventProducer;
+    private ProducerInterface $eventProducer;
 
     /** @var DomainMessage[] */
-    private $events = [];
+    private array $events = [];
 
     public function __construct(ProducerInterface $eventProducer)
     {

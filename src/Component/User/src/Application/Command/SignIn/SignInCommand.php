@@ -9,11 +9,8 @@ use EvidApp\Shared\Infrastructure\Bus\CommandInterface;
 
 class SignInCommand implements CommandInterface
 {
-    /** @var Email */
-    public $email;
-
-    /** @var string */
-    public $plainPassword;
+    public Email $email;
+    public string $plainPassword;
 
     public function __construct(string $email, string $plainPassword)
     {

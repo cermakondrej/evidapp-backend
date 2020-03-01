@@ -10,11 +10,8 @@ use EvidApp\User\Infrastructure\Auth\AuthenticationProvider;
 
 class GetTokenHandler implements QueryHandlerInterface
 {
-    /** @var GetUserCredentialsByEmailInterface */
-    private $userCredentialsByEmail;
-
-    /** @var AuthenticationProvider */
-    private $authenticationProvider;
+    private GetUserCredentialsByEmailInterface $userCredentialsByEmail;
+    private AuthenticationProvider $authenticationProvider;
 
     public function __construct(
         GetUserCredentialsByEmailInterface $userCredentialsByEmail,

@@ -28,14 +28,13 @@ class ExceptionSubscriber implements EventSubscriberInterface
 
     public function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getThrowable();
-
-        $response = new JsonResponse();
-        $response->headers->set('Content-Type', 'application/vnd.api+json');
-        $response->setStatusCode($this->getStatusCode($exception));
-        $response->setData($this->getErrorMessage($exception, $response));
-
-        $event->setResponse($response);
+//
+//        $response = new JsonResponse();
+//        $response->headers->set('Content-Type', 'application/vnd.api+json');
+//        $response->setStatusCode($this->getStatusCode($exception));
+//        $response->setData($this->getErrorMessage($exception, $response));
+//
+//        $event->setResponse($response);
     }
 
     private function getStatusCode(Throwable $exception): int

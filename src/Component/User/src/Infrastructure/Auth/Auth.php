@@ -10,16 +10,12 @@ use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class Auth implements UserInterface, EncoderAwareInterface
+class Auth implements UserInterface
 {
-    /** @var UuidInterface */
-    private $uuid;
 
-    /** @var Email */
-    private $email;
-
-    /** @var HashedPassword */
-    private $hashedPassword;
+    private UuidInterface $uuid;
+    private Email $email;
+    private HashedPassword $hashedPassword;
 
     private function __construct(UuidInterface $uuid, Email $email, HashedPassword $hashedPassword)
     {

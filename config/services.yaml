@@ -74,8 +74,7 @@ services:
             - '@broadway.serializer.payload'
             - '@broadway.serializer.metadata'
             - 'events'
-            - true
-            - '@broadway.uuid.converter'
+            - false
 
 
     ### UI Listeners

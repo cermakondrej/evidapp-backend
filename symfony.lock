@@ -99,7 +99,11 @@
             "branch": "master",
             "version": "1.2",
             "ref": "c1431086fec31f17fbcfe6d6d7e92059458facc1"
-        }
+        },
+        "files": [
+            "config/packages/doctrine_migrations.yaml",
+            "src/Migrations/.gitignore"
+        ]
     },
     "doctrine/event-manager": {
         "version": "v1.0.0"
@@ -114,7 +118,7 @@
         "version": "v1.0.1"
     },
     "doctrine/migrations": {
-        "version": "v2.0.0"
+        "version": "3.0.x-dev"
     },
     "doctrine/orm": {
         "version": "v2.6.3"
@@ -226,6 +230,15 @@
             "config/packages/prod/jms_serializer.yaml"
         ]
     },
+    "laminas/laminas-code": {
+        "version": "3.5.x-dev"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3-dev"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.x-dev"
+    },
     "lcobucci/jwt": {
         "version": "3.2.5"
     },
@@ -290,13 +303,13 @@
         "version": "v4.2.0"
     },
     "ocramius/proxy-manager": {
-        "version": "2.1.1"
+        "version": "2.7.x-dev"
     },
     "pdepend/pdepend": {
         "version": "2.5.2"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "php-amqplib/php-amqplib": {
         "version": "v2.8.0"
@@ -313,15 +326,6 @@
             "config/packages/old_sound_rabbit_mq.yaml",
             "src/Consumer/.gitignore"
         ]
-    },
-    "phpdocumentor/reflection-common": {
-        "version": "1.0.1"
-    },
-    "phpdocumentor/reflection-docblock": {
-        "version": "4.3.0"
-    },
-    "phpdocumentor/type-resolver": {
-        "version": "0.4.0"
     },
     "phpmd/phpmd": {
         "version": "2.7.0"
@@ -445,6 +449,9 @@
     },
     "symfony/dotenv": {
         "version": "v4.2.2"
+    },
+    "symfony/error-handler": {
+        "version": "4.4.x-dev"
     },
     "symfony/event-dispatcher": {
         "version": "v4.2.2"
@@ -609,12 +616,6 @@
     "symfony/security-http": {
         "version": "v4.2.2"
     },
-    "symfony/serializer": {
-        "version": "v4.3.11"
-    },
-    "symfony/serializer-pack": {
-        "version": "v1.0.2"
-    },
     "symfony/service-contracts": {
         "version": "v1.1.8"
     },
@@ -684,14 +685,8 @@
     "twig/twig": {
         "version": "v2.6.2"
     },
-    "webmozart/assert": {
-        "version": "1.4.0"
-    },
-    "zendframework/zend-code": {
-        "version": "3.3.1"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.1"
+    "webimpress/safe-writer": {
+        "version": "2.1.x-dev"
     },
     "zircote/swagger-php": {
         "version": "2.0.13"

@@ -11,8 +11,7 @@ use EvidApp\Shared\Domain\Event\EventRepositoryInterface;
 
 class GetEventsHandler implements QueryHandlerInterface
 {
-    /** @var EventRepositoryInterface */
-    private $eventRepository;
+    private EventRepositoryInterface $eventRepository;
 
     public function __construct(EventRepositoryInterface $eventRepository)
     {

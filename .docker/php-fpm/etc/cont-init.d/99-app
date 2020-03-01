@@ -1,0 +1,19 @@
+#!/usr/bin/with-contenv bash
+
+set -e
+
+until (echo > /dev/tcp/evidapp-rmq/5672) &> /dev/null; do
+    echo '** Rabbit is unavailable - sleeping... **'
+    sleep 1
+done
+
+
+cat <<'MSG'
+
+******************************************
+********** EVIDAPP IS READY **************
+******************************************
+
+MSG
+
+exit 0

@@ -11,15 +11,9 @@ use Doctrine\ORM\QueryBuilder;
 
 abstract class DatabaseRepository
 {
-
-    /** @var string */
-    protected $class;
-
-    /** @var EntityRepository */
-    protected $repository;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    protected string $class;
+    protected EntityRepository $repository;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -47,7 +41,6 @@ abstract class DatabaseRepository
         if (null === $model) {
             throw new NotFoundException();
         }
-
         return $model;
     }
 

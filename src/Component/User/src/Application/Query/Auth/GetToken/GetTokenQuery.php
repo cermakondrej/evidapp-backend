@@ -9,8 +9,7 @@ use EvidApp\User\Domain\ValueObject\Email;
 
 class GetTokenQuery implements QueryInterface
 {
-    /** @var Email */
-    public $email;
+    public Email $email;
 
     public function __construct(string $email)
     {

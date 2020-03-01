@@ -28,7 +28,7 @@ final class DatabaseUserReadRepository extends DatabaseRepository implements Che
         $qb = $this->repository
             ->createQueryBuilder('user')
             ->where('user.uuid = :uuid')
-            ->setParameter('uuid', $uuid->getBytes());
+            ->setParameter('uuid', $uuid->toString());
 
         return $this->oneOrException($qb);
     }
@@ -57,16 +57,17 @@ final class DatabaseUserReadRepository extends DatabaseRepository implements Che
         return $this->oneOrException($qb);
     }
 
-    public function page(int $page = 1, int $limit = 50): array
+    public function page(int $page, int $limit): array
     {
-        Assertion::greaterThan($page, 0, 'Pagination need to be > 0');
+        Assertion::greaterThan($page, 0, 'Page needs to be bigger than 0');
+        Assertion::greaterThan($limit, 0, 'Limit needs to be bigger than 0');
 
-        // TODO implement pagination
+        // TODO implement pagination :)
         $data = $this->repository
             ->createQueryBuilder('user')
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getArrayResult();
-
+            ->getResult();
 
         return [
             'data' => $data,

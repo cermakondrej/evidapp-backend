@@ -13,14 +13,10 @@ use Ramsey\Uuid\UuidInterface;
 
 final class UserPasswordChanged implements Serializable
 {
-    /** @var UuidInterface */
-    public $uuid;
 
-    /** @var HashedPassword */
-    public $password;
-
-    /** @var DateTime */
-    public $updatedAt;
+    public UuidInterface $uuid;
+    public HashedPassword $password;
+    public DateTime $updatedAt;
 
     public function __construct(UuidInterface $uuid, HashedPassword $password, DateTime $updatedAt)
     {

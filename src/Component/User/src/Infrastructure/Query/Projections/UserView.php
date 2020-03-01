@@ -12,21 +12,14 @@ use Broadway\ReadModel\SerializableReadModel;
 use Broadway\Serializer\Serializable;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use JsonSerializable;
 
-class UserView implements SerializableReadModel
+class UserView implements SerializableReadModel, JsonSerializable
 {
-
-    /** @var UuidInterface */
-    private $uuid;
-
-    /** @var Credentials */
-    private $credentials;
-
-    /** @var DateTime */
-    private $createdAt;
-
-    /** @var DateTime */
-    private $updatedAt;
+    private UuidInterface $uuid;
+    private Credentials $credentials;
+    private DateTime $createdAt;
+    private ?DateTime $updatedAt;
 
 
     public static function fromSerializable(Serializable $event): self
@@ -53,9 +46,9 @@ class UserView implements SerializableReadModel
     public function serialize(): array
     {
         return [
-            'uuid' => $this->uuid->toString(),
+            'uuid' => $this->getId(),
             'credentials' => [
-                'email' => $this->credentials->email()->toString(),
+                'email' => $this->credentials->getEmail()->toString(),
             ],
         ];
     }
@@ -67,17 +60,17 @@ class UserView implements SerializableReadModel
 
     public function email(): string
     {
-        return $this->credentials->email()->toString();
+        return $this->credentials->getEmail()->toString();
     }
 
     public function hashedPassword(): string
     {
-        return $this->credentials->password()->toString();
+        return $this->credentials->getPassword()->toString();
     }
 
     public function changeEmail(Email $email): void
     {
-        $this->credentials = new Credentials($email, $this->credentials->password());
+        $this->credentials = new Credentials($email, $this->credentials->getPassword());
     }
 
     public function changeUpdatedAt(DateTime $updatedAt): void
@@ -87,11 +80,24 @@ class UserView implements SerializableReadModel
 
     public function changePassword(HashedPassword $password): void
     {
-        $this->credentials = new Credentials($this->credentials->email(), $password);
+        $this->credentials = new Credentials($this->credentials->getEmail(), $password);
     }
 
     public function getId(): string
     {
         return $this->uuid->toString();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'uuid' => $this->getId(),
+            'email' => $this->credentials->getEmail()->toString(),
+            'created_at' => $this->createdAt ? $this->createdAt->toString() : null,
+            'updated_at' => $this->updatedAt ? $this->updatedAt->toString() : null,
+        ];
     }
 }

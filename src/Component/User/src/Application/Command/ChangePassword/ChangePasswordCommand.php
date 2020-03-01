@@ -11,11 +11,8 @@ use Ramsey\Uuid\UuidInterface;
 
 class ChangePasswordCommand implements CommandInterface
 {
-    /** @var UuidInterface */
-    public $userUuid;
-
-    /** @var HashedPassword */
-    public $password;
+    public UuidInterface $userUuid;
+    public HashedPassword $password;
 
     public function __construct(string $userUuid, string $plainPassword)
     {

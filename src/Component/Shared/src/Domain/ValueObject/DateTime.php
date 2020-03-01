@@ -6,13 +6,13 @@ namespace EvidApp\Shared\Domain\ValueObject;
 
 use EvidApp\Shared\Domain\Exception\DateTimeException;
 use DateTimeImmutable;
+use DateTimeInterface;
 
 class DateTime
 {
     public const FORMAT = 'Y-m-d\TH:i:s.uP';
 
-    /** @var DateTimeImmutable */
-    private $dateTime;
+    private DateTimeInterface $dateTime;
 
     public static function now(): self
     {
@@ -42,7 +42,7 @@ class DateTime
         return $this->dateTime->format(self::FORMAT);
     }
 
-    public function toNative(): DateTimeImmutable
+    public function toNative(): DateTimeInterface
     {
         return $this->dateTime;
     }

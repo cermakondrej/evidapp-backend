@@ -8,17 +8,12 @@ use EvidApp\Shared\Application\Query\Exception\NotFoundException;
 
 class Collection
 {
-    /** @var int */
-    public $page;
-
-    /** @var int */
-    public $limit;
-
-    /** @var int */
-    public $total;
+    public int $page;
+    public int $limit;
+    public int $total;
 
     /** @var Item[] */
-    public $data;
+    public array $data;
 
     public function __construct(int $page, int $limit, int $total, array $data)
     {

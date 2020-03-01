@@ -2,26 +2,23 @@
 
 declare(strict_types=1);
 
-namespace EvidApp\User\Application\Query\FindByEmail;
+namespace EvidApp\User\Application\Query\FindAll;
 
 use EvidApp\Shared\Application\Query\Collection;
 use EvidApp\Shared\Application\Query\QueryHandlerInterface;
-use EvidApp\User\Application\Query\FindAll\FindALlQuery;
 use EvidApp\User\Infrastructure\Query\Repository\DatabaseUserReadRepository;
 
 
 class FindAllHandler implements QueryHandlerInterface
 {
-
-    /** @var DatabaseUserReadRepository */
-    private $repository;
+    private DatabaseUserReadRepository $repository;
 
     public function __construct(DatabaseUserReadRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    public function __invoke(FindALlQuery $query): Collection
+    public function __invoke(FindAllQuery $query): Collection
     {
         $result = $this->repository->page($query->page, $query->limit);
 

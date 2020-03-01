@@ -11,8 +11,7 @@ final class HashedPassword
 
     public const COST = 12;
 
-    /** @var string */
-    private $hashedPassword;
+    private string $hashedPassword;
 
     private function __construct()
     {

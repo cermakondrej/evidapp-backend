@@ -13,11 +13,8 @@ use Ramsey\Uuid\UuidInterface;
 
 class SignUpCommand implements CommandInterface
 {
-    /** @var UuidInterface */
-    public $uuid;
-
-    /** @var Credentials */
-    public $credentials;
+    public UuidInterface $uuid;
+    public Credentials $credentials;
 
     public function __construct(string $uuid, string $email, string $plainPassword)
     {

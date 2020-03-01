@@ -8,11 +8,8 @@ use EvidApp\Shared\Infrastructure\Bus\QueryInterface;
 
 class GetEventsQuery implements QueryInterface
 {
-    /** @var int */
-    public $page;
-
-    /** @var int */
-    public $limit;
+    public int $page;
+    public int $limit;
 
     public function __construct(int $page = 1, int $limit = 50)
     {

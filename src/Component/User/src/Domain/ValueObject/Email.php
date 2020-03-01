@@ -8,20 +8,21 @@ use Assert\Assertion;
 
 class Email
 {
+    private string $email;
 
-    /** @var string */
-    private $email;
-
-    private function __construct(string $email)
+    private function __construct()
     {
-        $this->email = $email;
     }
 
     public static function fromString(string $email): self
     {
         Assertion::email($email, 'Not a valid email');
 
-        return new self($email);
+        $mail = new self();
+
+        $mail->email = $email;
+
+        return $mail;
     }
 
     public function toString(): string

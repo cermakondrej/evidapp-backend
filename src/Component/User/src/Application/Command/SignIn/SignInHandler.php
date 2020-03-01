@@ -13,11 +13,8 @@ use Ramsey\Uuid\UuidInterface;
 
 class SignInHandler implements CommandHandlerInterface
 {
-    /** @var UserRepositoryInterface */
-    private $userStore;
-
-    /** @var CheckUserByEmailInterface */
-    private $userCollection;
+    private UserRepositoryInterface $userStore;
+    private CheckUserByEmailInterface $userCollection;
 
     public function __construct(UserRepositoryInterface $userStore, CheckUserByEmailInterface $userCollection)
     {

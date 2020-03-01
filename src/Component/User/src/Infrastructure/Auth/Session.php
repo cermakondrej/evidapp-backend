@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace EvidApp\User\Infrastructure\User\Auth;
 
 use EvidApp\User\Domain\Exception\InvalidCredentialsException;
+use EvidApp\User\Infrastructure\Auth\Auth;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 final class Session
 {
-    /** @var TokenStorageInterface */
-    private $tokenStorage;
+    private TokenStorageInterface $tokenStorage;
 
     public function __construct(TokenStorageInterface $tokenStorage)
     {

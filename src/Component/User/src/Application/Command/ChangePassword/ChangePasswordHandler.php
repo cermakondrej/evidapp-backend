@@ -9,8 +9,7 @@ use EvidApp\User\Domain\Repository\UserRepositoryInterface;
 
 class ChangePasswordHandler implements CommandHandlerInterface
 {
-    /** @var UserRepositoryInterface */
-    private $userRepository;
+    private UserRepositoryInterface $userRepository;
 
     public function __construct(UserRepositoryInterface $userRepository)
     {

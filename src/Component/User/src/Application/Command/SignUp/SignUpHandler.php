@@ -12,11 +12,8 @@ use EvidApp\User\Domain\User;
 
 class SignUpHandler implements CommandHandlerInterface
 {
-    /** @var UserRepositoryInterface */
-    private $userRepository;
-
-    /** @var UniqueEmailSpecificationInterface */
-    private $uniqueEmailSpecification;
+    private UserRepositoryInterface $userRepository;
+    private UniqueEmailSpecificationInterface $uniqueEmailSpecification;
 
     public function __construct(
         UserRepositoryInterface $userRepository,

@@ -11,11 +11,8 @@ use Ramsey\Uuid\UuidInterface;
 
 class ChangeEmailCommand implements CommandInterface
 {
-    /** @var UuidInterface */
-    public $userUuid;
-
-    /** @var Email */
-    public $email;
+    public UuidInterface $userUuid;
+    public Email $email;
 
     public function __construct(string $userUuid, string $email)
     {

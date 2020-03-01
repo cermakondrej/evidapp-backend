@@ -12,17 +12,11 @@ use Doctrine\DBAL\Types\DateTimeImmutableType;
 
 class DateTimeType extends DateTimeImmutableType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return $platform->getDateTimeTypeDeclarationSQL($fieldDeclaration);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
         if (null === $value) {
@@ -40,10 +34,7 @@ class DateTimeType extends DateTimeImmutableType
         throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', DateTime::class]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?DateTime
     {
         if (null === $value || $value instanceof DateTime) {
             return $value;

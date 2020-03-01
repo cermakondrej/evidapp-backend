@@ -14,9 +14,7 @@ use Broadway\ReadModel\Projector;
 
 class UserProjectionFactory extends Projector
 {
-
-    /** @var DatabaseUserReadRepository */
-    private $repository;
+    private DatabaseUserReadRepository $repository;
 
 
     public function __construct(DatabaseUserReadRepository $repository)

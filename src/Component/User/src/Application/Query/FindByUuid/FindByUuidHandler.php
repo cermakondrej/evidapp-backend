@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace EvidApp\User\Application\Query\FindByEmail;
+namespace EvidApp\User\Application\Query\FindByUuid;
 
 use EvidApp\Shared\Application\Query\Item;
 use EvidApp\Shared\Application\Query\QueryHandlerInterface;
@@ -14,7 +14,7 @@ class FindByUuidHandler implements QueryHandlerInterface
 {
 
     /** @var DatabaseUserReadRepository */
-    private $repository;
+    private DatabaseUserReadRepository $repository;
 
     public function __construct(DatabaseUserReadRepository $repository)
     {

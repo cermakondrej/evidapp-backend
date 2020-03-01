@@ -16,14 +16,9 @@ use Ramsey\Uuid\UuidInterface;
 final class UserWasCreated implements Serializable
 {
 
-    /** @var UuidInterface */
-    public $uuid;
-
-    /** @var Credentials */
-    public $credentials;
-
-    /** @var DateTime */
-    public $createdAt;
+    public UuidInterface $uuid;
+    public Credentials $credentials;
+    public DateTime $createdAt;
 
     public function __construct(UuidInterface $uuid, Credentials $credentials, DateTime $createdAt)
     {
@@ -52,8 +47,8 @@ final class UserWasCreated implements Serializable
         return [
             'uuid' => $this->uuid->toString(),
             'credentials' => [
-                'email' => $this->credentials->email()->toString(),
-                'password' => $this->credentials->password()->toString(),
+                'email' => $this->credentials->getEmail()->toString(),
+                'password' => (string) $this->credentials->getPassword()->toString()
             ],
             'created_at' => $this->createdAt->toString(),
         ];

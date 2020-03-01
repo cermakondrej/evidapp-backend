@@ -37,7 +37,7 @@ services:
         - php
 
     workers:
-      image: jorge07/alpine-php:7.3.5-dev
+      image: jorge07/alpine-php:7.4-dev
       container_name: evidapp-workers
       volumes:
         - .:/var/www/html

@@ -10,7 +10,7 @@ services:
 
     webserver:
       ports:
-        - "8000:80"
+        - "80:80"
       
     rmq:
       ports:

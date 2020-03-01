@@ -33,7 +33,7 @@ erase: ## Stop and delete containers, clean volumes.
 .PHONY: build
 build: ## Build environment and initialize composer and project dependencies
 	$(compose) build
-	$(compose) run --rm php sh -lc 'xoff;COMPOSER_MEMORY_LIMIT=-1 composer install'
+	$(compose) run --rm php sh -lc 'COMPOSER_MEMORY_LIMIT=-1 composer install'
 
 .PHONY: artifact
 artifact: ## Build production artifact
@@ -51,7 +51,11 @@ up: ## Spin up environment
 db: ## Recreate database
 	$(compose) exec -T php sh -lc './bin/console d:d:d --force'
 	$(compose) exec -T php sh -lc './bin/console d:d:c'
-	$(compose) exec -T php sh -lc './bin/console d:s:c'
+	$(compose) exec -T php sh -lc './bin/console d:m:m -n'
+
+.PHONY: bash
+bash: ## Go Inside
+	$(compose) exec php bash
 
 ##@ Testing
 .PHONY: test

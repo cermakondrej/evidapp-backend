@@ -20,20 +20,11 @@ use Ramsey\Uuid\UuidInterface;
 
 class User extends EventSourcedAggregateRoot
 {
-    /** @var UuidInterface */
-    private $uuid;
-
-    /** @var Email */
-    private $email;
-
-    /** @var HashedPassword */
-    private $hashedPassword;
-
-    /** @var DateTime */
-    private $createdAt;
-
-    /** @var DateTime|null */
-    private $updatedAt;
+    private UuidInterface $uuid;
+    private Email $email;
+    private HashedPassword $hashedPassword;
+    private DateTime $createdAt;
+    private ?DateTime $updatedAt;
 
     public static function create(
         UuidInterface $uuid,
@@ -41,7 +32,7 @@ class User extends EventSourcedAggregateRoot
         UniqueEmailSpecificationInterface $uniqueEmailSpecification
     ): self
     {
-        $uniqueEmailSpecification->isUnique($credentials->email());
+        $uniqueEmailSpecification->isUnique($credentials->getEmail());
 
         $user = new self();
 
@@ -77,8 +68,8 @@ class User extends EventSourcedAggregateRoot
     {
         $this->uuid = $event->uuid;
 
-        $this->setEmail($event->credentials->email());
-        $this->setHashedPassword($event->credentials->password());
+        $this->setEmail($event->credentials->getEmail());
+        $this->setHashedPassword($event->credentials->getPassword());
         $this->setCreatedAt($event->createdAt);
     }
 

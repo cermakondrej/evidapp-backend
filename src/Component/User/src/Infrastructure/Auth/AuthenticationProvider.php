@@ -9,10 +9,7 @@ use Ramsey\Uuid\UuidInterface;
 
 final class AuthenticationProvider
 {
-
-    /** @var JWTTokenManagerInterface */
-    private $JWTManager;
-
+    private JWTTokenManagerInterface $JWTManager;
 
     public function __construct(JWTTokenManagerInterface $JWTManager)
     {

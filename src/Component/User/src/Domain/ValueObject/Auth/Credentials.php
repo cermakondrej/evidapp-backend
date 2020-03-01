@@ -8,11 +8,8 @@ use EvidApp\User\Domain\ValueObject\Email;
 
 class Credentials
 {
-    /** @var Email */
-    private $email;
-
-    /** @var HashedPassword */
-    private $password;
+    private Email $email;
+    private HashedPassword $password;
 
     public function __construct(Email $email, HashedPassword $password)
     {
@@ -20,14 +17,13 @@ class Credentials
         $this->password = $password;
     }
 
-    public function email(): Email
+    public function getEmail(): Email
     {
         return $this->email;
     }
 
-    public function password(): HashedPassword
+    public function getPassword(): HashedPassword
     {
         return $this->password;
     }
-
 }
